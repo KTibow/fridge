@@ -63,21 +63,13 @@ def main():
             break
         # Update data
         if time.monotonic() - last_update > 15:
-            magtag.peripherals.neopixel_disable = False
-            magtag.peripherals.neopixels.fill((50, 0, 50))
             try:
                 update_time()
                 update_food()
             except Exception as e:
                 print("Updating exception:", e)
             last_update = time.monotonic()
-            magtag.peripherals.neopixels.fill((0, 0, 0))
-            magtag.peripherals.neopixel_disable = True
         # Draw
-        magtag.peripherals.neopixel_disable = False
-        magtag.peripherals.neopixels.fill((50, 0, 50))
         draw()
-        magtag.peripherals.neopixels.fill((0, 0, 0))
-        magtag.peripherals.neopixel_disable = True
         time.sleep(0.2)
         unix_time += 0.2
