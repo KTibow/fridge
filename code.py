@@ -11,7 +11,6 @@ leftovers = ""
 
 def update_time():
     # Time
-    global current_time
     global unix_time
     old_time = current_time
     response = requests.get("http://worldtimeapi.org/api/ip").json()
@@ -60,7 +59,7 @@ def main():
             break
         if time.monotonic() - last_update > 15:
             magtag.peripherals.neopixel_disable = False
-            magtag.peripherals.neopixels.fill((30, 0, 30))
+            magtag.peripherals.neopixels.fill((50, 0, 50))
             try:
                 update()
             except Exception:
