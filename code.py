@@ -40,7 +40,7 @@ def main():
             10,
             10,
         ),
-        text_scale=1,
+        text_scale=3,
     )
     # Loop
     last_update = time.monotonic()
