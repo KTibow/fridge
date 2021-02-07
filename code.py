@@ -16,6 +16,9 @@ def update_time():
     response = requests.get("http://worldtimeapi.org/api/ip").json()
     unix_time = response["unixtime"] + response["raw_offset"]
     print(unix_time)
+
+
+def update_food():
     # Food
     response = requests.get(
         secrets["endpoint"] + "/api/stock",
@@ -35,7 +38,7 @@ def draw():
     if old_time != current_time:
         magtag.set_text(current_time)
     old_time = current_time
-    
+
 
 def main():
     # Setup
@@ -54,20 +57,28 @@ def main():
     # Loop
     last_update = time.monotonic()
     while True:
+        # Exit
         if magtag.peripherals.any_button_pressed:
             magtag.peripherals.neopixels.fill((0, 100, 100))
             time.sleep(1)
             break
+        # Update data
         if time.monotonic() - last_update > 15:
             magtag.peripherals.neopixel_disable = False
             magtag.peripherals.neopixels.fill((50, 0, 50))
             try:
-                update()
-            except Exception:
-                pass
+                update_time()
+                update_food()
+            except Exception as e:
+                print("Updating exception:", e)
             last_update = time.monotonic()
             magtag.peripherals.neopixels.fill((0, 0, 0))
             magtag.peripherals.neopixel_disable = True
+        # Draw
+        magtag.peripherals.neopixel_disable = False
+        magtag.peripherals.neopixels.fill((50, 0, 50))
         draw()
+        magtag.peripherals.neopixels.fill((0, 0, 0))
+        magtag.peripherals.neopixel_disable = True
         time.sleep(0.2)
         unix_time += 0.2
