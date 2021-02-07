@@ -30,7 +30,7 @@ if magtag.peripherals.buttons[0].value:
         old_code = open("/code.py").read()
         with open("/code.py", "w") as test:
             # Write
-            magtag.peripherals.neopixels.fill((0, 255, 0))
+            magtag.peripherals.neopixels.fill((0, 0, 255))
             test.write(response.text)
             test.flush()
     except Exception as e:
