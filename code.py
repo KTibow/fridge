@@ -9,14 +9,16 @@ weather = ""
 overdue = ""
 leftovers = ""
 
+
 def update():
     global current_time
-    response = requests.get(
-        "http://worldtimeapi.org/api/ip"
-    ).json()
+    old_time = current_time
+    response = requests.get("http://worldtimeapi.org/api/ip").json()
     current_time = response["unixtime"] + response["raw_offset"]
     current_time = time.localtime(current_time)
     current_time = f"{current_time.tm_hour % 12}:{current_time.tm_min}"
+    if current_time != old_time:
+        magtag.set_text(current_time)
     response = requests.get(
         secrets["endpoint"] + "/api/stock",
         headers={
@@ -46,8 +48,10 @@ def main():
             magtag.peripherals.neopixels.fill((0, 100, 100))
             time.sleep(1)
             break
-        if time.monotonic() - last_update > 20:
-            update()
-            magtag.set_text(current_time)
+        if time.monotonic() - last_update > 10:
+            try:
+                update()
+            except Exception:
+                pass
             last_update = time.monotonic()
         time.sleep(1)
