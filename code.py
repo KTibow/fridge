@@ -31,8 +31,8 @@ def update():
 
 def main():
     # Setup
-    magtag.peripherals.neopixel_disable = False
-    magtag.peripherals.neopixels.fill((100, 0, 100))
+    magtag.peripherals.neopixels.fill((0, 0, 0))
+    magtag.peripherals.neopixel_disable = True
     # Previously: (magtag.graphics.display.height // 2) - 1
     magtag.add_text(
         text_font=terminalio.FONT,
@@ -50,9 +50,13 @@ def main():
             time.sleep(1)
             break
         if time.monotonic() - last_update > 10:
+            magtag.peripherals.neopixel_disable = False
+            magtag.peripherals.neopixels.fill((100, 0, 100))
             try:
                 update()
             except Exception:
                 pass
             last_update = time.monotonic()
+            magtag.peripherals.neopixels.fill((0, 0, 0))
+            magtag.peripherals.neopixel_disable = True
         time.sleep(1)
