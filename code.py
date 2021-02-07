@@ -3,22 +3,20 @@ import time
 import terminalio
 from secrets import secrets
 
-
-current_time = ""
-weather = ""
+old_time = ""
+unix_time = 1610000000
 overdue = ""
 leftovers = ""
 
 
-def update():
+def update_time():
+    # Time
     global current_time
+    global unix_time
     old_time = current_time
     response = requests.get("http://worldtimeapi.org/api/ip").json()
-    current_time = response["unixtime"] + response["raw_offset"]
-    current_time = time.localtime(current_time)
-    current_time = f"{current_time.tm_hour % 12}:{current_time.tm_min:02}"
-    if current_time != old_time:
-        magtag.set_text(current_time)
+    unix_time = response["unixtime"] + response["raw_offset"]
+    # Food
     response = requests.get(
         secrets["endpoint"] + "/api/stock",
         headers={
@@ -29,8 +27,19 @@ def update():
     print(response.json())
 
 
+def draw():
+    # Time
+    global old_time
+    current_time = time.localtime(unix_time)
+    current_time = f"{current_time.tm_hour % 12}:{current_time.tm_min:02}"
+    if old_time != current_time:
+        magtag.set_text(current_time)
+    old_time = current_time
+    
+
 def main():
     # Setup
+    global unix_time
     magtag.peripherals.neopixels.fill((0, 0, 0))
     magtag.peripherals.neopixel_disable = True
     # Previously: (magtag.graphics.display.height // 2) - 1
@@ -49,9 +58,9 @@ def main():
             magtag.peripherals.neopixels.fill((0, 100, 100))
             time.sleep(1)
             break
-        if time.monotonic() - last_update > 10:
+        if time.monotonic() - last_update > 15:
             magtag.peripherals.neopixel_disable = False
-            magtag.peripherals.neopixels.fill((100, 0, 100))
+            magtag.peripherals.neopixels.fill((30, 0, 30))
             try:
                 update()
             except Exception:
@@ -59,4 +68,6 @@ def main():
             last_update = time.monotonic()
             magtag.peripherals.neopixels.fill((0, 0, 0))
             magtag.peripherals.neopixel_disable = True
-        time.sleep(1)
+        draw()
+        time.sleep(0.2)
+        unix_time += 0.2
