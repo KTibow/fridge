@@ -33,13 +33,14 @@ def main():
     # Setup
     magtag.peripherals.neopixel_disable = False
     magtag.peripherals.neopixels.fill((100, 0, 100))
+    # Previously: (magtag.graphics.display.height // 2) - 1
     magtag.add_text(
         text_font=terminalio.FONT,
         text_position=(
-            50,
-            (magtag.graphics.display.height // 2) - 1,
+            0,
+            0,
         ),
-        text_scale=3,
+        text_scale=1,
     )
     # Loop
     last_update = time.monotonic()
