@@ -25,14 +25,13 @@ magtag.peripherals.neopixel_disable = False
 storage.remount("/", False)
 
 try:
-    magtag.set_text("Connecting")
+    magtag.peripherals.neopixels.fill((255, 75, 0))
     # Init
     wifi.radio.connect(secrets["ssid"], secrets["password"])
     pool = socketpool.SocketPool(wifi.radio)
     requests = adafruit_requests.Session(pool, ssl.create_default_context())
-    magtag.set_text("Updating")
+    magtag.peripherals.neopixels.fill((50, 0, 255))
     # Download
-    magtag.peripherals.neopixels.fill((255, 255, 0))
     response = requests.get("https://raw.githubusercontent.com/KTibow/fridge/main/code.py")
     with open("/code.py", "w") as test:
         # Write
@@ -43,3 +42,7 @@ finally:
     storage.remount("/", True)
     magtag.peripherals.neopixels.fill((0, 0, 0))
     magtag.peripherals.neopixel_disable = True
+    import code
+    code.magtag = magtag
+    code.requests = requests
+    code.main()
