@@ -12,7 +12,6 @@ leftovers = ""
 def update_time():
     # Time
     global unix_time
-    old_time = current_time
     response = requests.get("http://worldtimeapi.org/api/ip").json()
     unix_time = response["unixtime"] + response["raw_offset"]
     print(unix_time)
