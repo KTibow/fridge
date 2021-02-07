@@ -9,14 +9,6 @@ def main():
     magtag.peripherals.neopixels.fill((100, 0, 100))
     # Loop
     while True:
-        print((
-            "GET",
-            secrets["endpoint"] + "/api/stock",
-            {
-                "GROCRY-API-KEY": secrets["api_key"],
-                "accept": "application/json",
-            },
-        ))
         response = requests.request(
             "GET",
             secrets["endpoint"] + "/api/stock",
@@ -25,5 +17,5 @@ def main():
                 "accept": "application/json",
             },
         )
-        raise Exception(response.text)
+        raise Exception(response.json())
         time.sleep(0.01)
