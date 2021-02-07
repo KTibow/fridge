@@ -44,3 +44,4 @@ magtag.peripherals.neopixel_disable = True
 
 # Finally code
 exec(open("/code.py").read())
+main()
