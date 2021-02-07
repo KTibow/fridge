@@ -18,5 +18,5 @@ def main():
                 "accept": "application/json",
             },
         )
-        raise Exception(response.text)
+        print(response.json())
         time.sleep(0.01)
