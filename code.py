@@ -4,7 +4,17 @@ import terminalio
 from secrets import secrets
 
 
+current_time = ""
+weather = ""
+overdue = ""
+leftovers = ""
+
 def update():
+    global current_time
+    response = requests.get(
+        "http://worldtimeapi.org/api/ip"
+    ).json()
+    current_time = response["unixtime"] + response["raw_offset"]
     response = requests.get(
         secrets["endpoint"] + "/api/stock",
         headers={
@@ -19,10 +29,6 @@ def main():
     # Setup
     magtag.peripherals.neopixel_disable = False
     magtag.peripherals.neopixels.fill((100, 0, 100))
-    current_time = ""
-    weather = ""
-    overdue = ""
-    leftovers = ""
     magtag.add_text(
         text_font=terminalio.FONT,
         text_position=(
@@ -31,7 +37,6 @@ def main():
         ),
         text_scale=3,
     )
-    magtag.set_text("It's 4:03 PM.")
     # Loop
     last_update = time.monotonic()
     while True:
@@ -41,5 +46,6 @@ def main():
             break
         if time.monotonic() - last_update > 15:
             update()
+            magtag.set_text(current_time)
             last_update = time.monotonic()
         time.sleep(1)
