@@ -11,6 +11,7 @@ def main():
     while True:
         if not magtag.peripherals.buttons[0]:
             magtag.peripherals.neopixels.fill((0, 100, 100))
+            time.sleep(1)
             break
         response = requests.get(
             secrets["endpoint"] + "/api/stock",
