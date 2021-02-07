@@ -18,7 +18,7 @@ def main():
             50,
             (magtag.graphics.display.height // 2) - 1,
         ),
-        text_scale=1,
+        text_scale=3,
     )
     magtag.set_text("It's 4:03 PM.")
     # Loop
