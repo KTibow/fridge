@@ -19,6 +19,6 @@ magtag.peripherals.neopixels.fill((0, 0, 0))
 magtag.peripherals.neopixel_disable = True
 # Loop
 while True:
-  response = requests.get("https://raw.githubusercontent.com/KTibow/fridge/main/code.py")
-  raise Exception(response)
+  response = requests.get(secrets.endpoint + "/api/stock")
+  raise Exception(response.text)
   time.sleep(0.01)
