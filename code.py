@@ -42,4 +42,4 @@ def main():
         if time.monotonic() - last_update > 15:
             update()
             last_update = time.monotonic()
-        time.sleep(0.01)
+        time.sleep(1)
