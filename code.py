@@ -12,7 +12,7 @@ def main():
         response = requests.get(
             secrets["endpoint"] + "/api/stock",
             headers={
-                "GROCRY-API-KEY": secrets["api_key"],
+                "GROCY-API-KEY": secrets["api_key"],
                 "accept": "application/json",
             },
         )
