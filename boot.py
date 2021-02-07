@@ -37,11 +37,12 @@ try:
     response = requests.get(
         "https://raw.githubusercontent.com/KTibow/fridge/main/code.py"
     )
-    with open("/code.py", "w") as test:
-        # Write
-        magtag.peripherals.neopixels.fill((0, 255, 0))
-        test.write(response.text)
-        test.flush()
+    if magtag.peripherals.buttons[0].value:
+        with open("/code.py", "w") as test:
+            # Write
+            magtag.peripherals.neopixels.fill((0, 255, 0))
+            test.write(response.text)
+            test.flush()
 finally:
     storage.remount("/", True)
     magtag.peripherals.neopixels.fill((0, 0, 0))
