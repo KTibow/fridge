@@ -9,6 +9,8 @@ def main():
     magtag.peripherals.neopixels.fill((100, 0, 100))
     # Loop
     while True:
+        if magtag.peripherals.buttons[0]:
+            magtag.peripherals.neopixels.fill((0, 100, 100))
         response = requests.get(
             secrets["endpoint"] + "/api/stock",
             headers={
