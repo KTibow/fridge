@@ -10,7 +10,7 @@ magtag.add_text(
     ),
     text_scale=3,
 )
-magtag.set_text("Loading")
+magtag.peripherals.neopixels.fill((255, 0, 0))
 # Everything else
 import time
 import storage
@@ -26,12 +26,11 @@ storage.remount("/", False)
 
 try:
     magtag.set_text("Connecting")
-    wifi.radio.connect(secrets["ssid"], secrets["password"])
-    magtag.set_text("Updating")
     # Init
-    magtag.peripherals.neopixels.fill((255, 0, 0))
+    wifi.radio.connect(secrets["ssid"], secrets["password"])
     pool = socketpool.SocketPool(wifi.radio)
     requests = adafruit_requests.Session(pool, ssl.create_default_context())
+    magtag.set_text("Updating")
     # Download
     magtag.peripherals.neopixels.fill((255, 255, 0))
     response = requests.get("https://raw.githubusercontent.com/KTibow/fridge/main/code.py")
@@ -42,4 +41,5 @@ try:
         test.flush()
 finally:
     storage.remount("/", True)
+    magtag.peripherals.neopixels.fill((0, 0, 0))
     magtag.peripherals.neopixel_disable = True
