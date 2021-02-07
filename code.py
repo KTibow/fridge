@@ -37,8 +37,8 @@ def main():
     magtag.add_text(
         text_font=terminalio.FONT,
         text_position=(
-            0,
-            0,
+            10,
+            10,
         ),
         text_scale=1,
     )
