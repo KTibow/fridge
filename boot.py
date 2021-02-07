@@ -2,7 +2,7 @@
 import time
 import storage
 from adafruit_magtag.magtag import MagTag
-import code
+import sys
 
 # Wifi related
 import adafruit_requests
@@ -19,9 +19,6 @@ wifi.radio.connect(secrets["ssid"], secrets["password"])
 pool = socketpool.SocketPool(wifi.radio)
 requests = adafruit_requests.Session(pool, ssl.create_default_context())
 magtag.peripherals.neopixels.fill((50, 0, 255))
-# Put stuff into the main code
-code.magtag = magtag
-code.requests = requests
 # Download
 response = requests.get(
     "https://raw.githubusercontent.com/KTibow/fridge/main/code.py"
@@ -30,6 +27,7 @@ response = requests.get(
 if magtag.peripherals.buttons[0].value:
     try:
         storage.remount("/", False)
+        old_code = open("/code.py").read()
         with open("/code.py", "w") as test:
             # Write
             magtag.peripherals.neopixels.fill((0, 255, 0))
@@ -45,4 +43,4 @@ magtag.peripherals.neopixels.fill((0, 0, 0))
 magtag.peripherals.neopixel_disable = True
 
 # Finally code
-code.main()
+exec(open("/code.py").read())
