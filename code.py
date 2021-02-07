@@ -19,7 +19,7 @@ def main():
     # Setup
     magtag.peripherals.neopixel_disable = False
     magtag.peripherals.neopixels.fill((100, 0, 100))
-    time = ""
+    current_time = ""
     weather = ""
     overdue = ""
     leftovers = ""
