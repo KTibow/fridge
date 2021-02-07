@@ -33,6 +33,7 @@ def draw():
     # Time
     global old_time
     current_time = time.localtime(unix_time)
+    print(current_time.tm_min)
     current_time = f"{current_time.tm_hour % 12}:{current_time.tm_min:02}"
     if old_time != current_time:
         magtag.set_text(current_time)
