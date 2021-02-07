@@ -4,6 +4,17 @@ import terminalio
 from secrets import secrets
 
 
+def update():
+    response = requests.get(
+        secrets["endpoint"] + "/api/stock",
+        headers={
+            "GROCY-API-KEY": secrets["api_key"],
+            "accept": "application/json",
+        },
+    )
+    print(response.json())
+
+
 def main():
     # Setup
     magtag.peripherals.neopixel_disable = False
@@ -22,17 +33,13 @@ def main():
     )
     magtag.set_text("It's 4:03 PM.")
     # Loop
+    last_update = time.monotonic()
     while True:
         if magtag.peripherals.any_button_pressed:
             magtag.peripherals.neopixels.fill((0, 100, 100))
             time.sleep(1)
             break
-        response = requests.get(
-            secrets["endpoint"] + "/api/stock",
-            headers={
-                "GROCY-API-KEY": secrets["api_key"],
-                "accept": "application/json",
-            },
-        )
-        print(response.json())
+        if time.monotonic() - last_update > 15:
+            update()
+            last_update = time.monotonic()
         time.sleep(0.01)
