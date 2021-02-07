@@ -9,7 +9,7 @@ def main():
     magtag.peripherals.neopixels.fill((100, 0, 100))
     # Loop
     while True:
-        if not magtag.peripherals.buttons[0]:
+        if not magtag.peripherals.buttons[1].value:
             magtag.peripherals.neopixels.fill((0, 100, 100))
             time.sleep(1)
             break
