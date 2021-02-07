@@ -15,6 +15,7 @@ def update_time():
     old_time = current_time
     response = requests.get("http://worldtimeapi.org/api/ip").json()
     unix_time = response["unixtime"] + response["raw_offset"]
+    print(unix_time)
     # Food
     response = requests.get(
         secrets["endpoint"] + "/api/stock",
