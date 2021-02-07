@@ -72,4 +72,4 @@ def main():
         # Draw
         draw()
         time.sleep(0.2)
-        unix_time += 0.2
+        #unix_time += 0.2
