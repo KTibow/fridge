@@ -16,7 +16,7 @@ def update():
     response = requests.get("http://worldtimeapi.org/api/ip").json()
     current_time = response["unixtime"] + response["raw_offset"]
     current_time = time.localtime(current_time)
-    current_time = f"{current_time.tm_hour % 12}:{current_time.tm_min}"
+    current_time = f"{current_time.tm_hour % 12}:{current_time.tm_min:02}"
     if current_time != old_time:
         magtag.set_text(current_time)
     response = requests.get(
