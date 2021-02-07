@@ -32,6 +32,7 @@ def update_food():
 def draw():
     # Time
     global old_time
+    print(time.monotonic(), unix_time_offset)
     current_time = time.localtime(time.monotonic() + unix_time_offset)
     current_time = f"{current_time.tm_hour % 12}:{current_time.tm_min:02}"
     if old_time != current_time:
