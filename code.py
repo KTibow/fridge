@@ -9,8 +9,7 @@ def main():
     magtag.peripherals.neopixels.fill((100, 0, 100))
     # Loop
     while True:
-        response = requests.request(
-            "GET",
+        response = requests.get(
             secrets["endpoint"] + "/api/stock",
             headers={
                 "GROCRY-API-KEY": secrets["api_key"],
