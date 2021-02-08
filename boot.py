@@ -27,7 +27,6 @@ response = requests.get(
 if magtag.peripherals.buttons[0].value:
     try:
         storage.remount("/", False)
-        old_code = open("/code.py").read()
         with open("/code.py", "w") as test:
             # Write
             magtag.peripherals.neopixels.fill((0, 0, 255))
