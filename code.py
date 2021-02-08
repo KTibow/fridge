@@ -4,7 +4,7 @@ import terminalio
 from secrets import secrets
 
 old_time = ""
-unix_time_offset = 1610000000
+unix_time_offset = 0
 overdue = ""
 leftovers = ""
 
@@ -14,7 +14,7 @@ def update_time():
     global unix_time_offset
     response = requests.get("http://worldtimeapi.org/api/ip").json()
     unix_time = response["unixtime"] + response["raw_offset"]
-    unix_time_offset = unix_time - time.monotonic()
+    unix_time_offset = unix_time - (1610000000 + time.monotonic())
 
 
 def update_food():
@@ -33,7 +33,7 @@ def draw():
     # Time
     global old_time
     print(time.monotonic(), unix_time_offset)
-    current_time = time.localtime(time.monotonic() + unix_time_offset)
+    current_time = time.localtime(time.monotonic() + unix_time_offset + 1610000000)
     current_time = f"{current_time.tm_hour % 12}:{current_time.tm_min:02}"
     if old_time != current_time:
         magtag.set_text(current_time)
