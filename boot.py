@@ -12,6 +12,7 @@ import socketpool # Set up a pool of sockets
 import ssl # Securely connect to GitHub for code
 import adafruit_requests # Download the code
 import storage  # Mount the code
+import microcontroller # Reset once it's downloaded
 
 # Ask user if they want to go
 magtag = MagTag()
@@ -97,5 +98,6 @@ if should_update:
     magtag.set_text("Update complete.")
     magtag.peripherals.neopixels.fill((0, 0, 0))
     time.sleep(2)
+    microcontroller.reset()
 
 magtag.peripherals.neopixel_disable = True
