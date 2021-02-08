@@ -1,46 +1,101 @@
 # Imports
-import time
-import storage
-from adafruit_magtag.magtag import MagTag
-import sys
+from adafruit_magtag.magtag import MagTag  # Control the MagTag
 
-# Wifi related
-import adafruit_requests
-import wifi
-import ssl
-import socketpool
-from secrets import secrets
+# Should update question imports
+import time  # Wait for stuff
+import terminalio  # Get font
 
+# OTA-related imports
+from secrets import secrets # WiFi passwords
+import wifi # Connect to WiFi
+import socketpool # Set up a pool of sockets
+import ssl # Securely connect to GitHub for code
+import adafruit_requests # Download the code
+import storage  # Mount the code
+
+# Ask user if they want to go
 magtag = MagTag()
 magtag.peripherals.neopixel_disable = False
-magtag.peripherals.neopixels.fill((255, 75, 0))
-# Init wifi
-wifi.radio.connect(secrets["ssid"], secrets["password"])
-pool = socketpool.SocketPool(wifi.radio)
-requests = adafruit_requests.Session(pool, ssl.create_default_context())
-magtag.peripherals.neopixels.fill((50, 0, 255))
-# Download
-response = requests.get(
-    "https://raw.githubusercontent.com/KTibow/fridge/main/code.py"
+magtag.peripherals.neopixels.fill((0, 50, 50)) # Loading LED
+magtag.add_text(
+    text_font=terminalio.FONT,
+    text_position=(
+        10,
+        10,
+    ),
+    text_scale=3,
 )
+magtag.set_text("Press any button in 4 seconds to start OTA.")
 
-if magtag.peripherals.buttons[0].value:
-    try:
-        storage.remount("/", False)
-        with open("/code.py", "w") as test:
-            # Write
-            magtag.peripherals.neopixels.fill((0, 0, 255))
-            test.write(response.text)
-            test.flush()
-    except Exception as e:
-        print("Exception thrown while updating.")
-        print(e)
-    storage.remount("/", True)
-
+# Wait
+initial_time = time.monotonic()
+should_update = False
+while time.monotonic() - initial_time < 4:
+    if time.monotonic() - initial_time < 1:
+        magtag.peripherals.neopixels.fill((0, 50, 0))
+    elif time.monotonic() - initial_time < 2:
+        magtag.peripherals.neopixels.fill((50, 50, 0))
+    elif time.monotonic() - initial_time < 3:
+        magtag.peripherals.neopixels.fill((50, 20, 0))
+    else:
+        magtag.peripherals.neopixels.fill((50, 0, 0))
+    if magtag.peripherals.any_button_pressed:
+        should_update = True
+        break
 
 magtag.peripherals.neopixels.fill((0, 0, 0))
-magtag.peripherals.neopixel_disable = True
 
-# Finally code
-exec(open("/code.py").read())
-main()
+# Update
+if should_update:
+    magtag.set_text("Updating...")
+    magtag.add_text(
+        text_font=terminalio.FONT,
+        text_position=(
+            10,
+            50,
+        ),
+        text_scale=1,
+    )
+    magtag.set_text("1: WiFi, 2: Sockets, 3: Download, 4: Save", 1)
+    magtag.peripherals.neopixels[3] = (255, 0, 0)
+    # Set up WiFi
+    try:
+        wifi.radio.connect(secrets["ssid"], secrets["password"])
+    except Exception as e:
+        magtag.set_text("WiFi error.")
+        raise e
+    magtag.peripherals.neopixels[2] = (255, 100, 0)
+    # Set up sockets
+    try:
+        pool = socketpool.SocketPool(wifi.radio)
+        requests = adafruit_requests.Session(pool, ssl.create_default_context())
+    except Exception as e:
+        magtag.set_text("Socket error.")
+        raise e
+    # Download code
+    magtag.peripherals.neopixels[1] = (255, 255, 0)
+    try:
+        response = requests.get(
+            "https://raw.githubusercontent.com/KTibow/fridge/main/code.py"
+        )
+    except Exception as e:
+        magtag.set_text("Download error.")
+        raise e
+    # Change code
+    magtag.peripherals.neopixels[0] = (0, 255, 0)
+    try:
+        storage.remount("/", False)
+        with open("/code.py", "w") as the_code:
+            the_code.write(response.text)
+            the_code.flush()
+    except Exception as e:
+        magtag.set_text("Changing code error.")
+        raise e
+    finally:
+        storage.remount("/", True)
+    # Tell user that it's done
+    magtag.set_text("Update complete.")
+    magtag.peripherals.neopixels.fill((0, 0, 0))
+    time.sleep(2)
+
+magtag.peripherals.neopixel_disable = True
