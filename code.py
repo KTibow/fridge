@@ -24,8 +24,9 @@ def update_food():
             "GROCY-API-KEY": secrets["api_key"],
             "accept": "application/json",
         },
-    )
-    print(response.json())
+    ).json()
+    for food in response:
+        print(food["name"], food["best_before_date"])
 
 
 def draw():
@@ -75,8 +76,5 @@ def main():
                 print("Updating exception:", e)
             last_update = time.monotonic()
         # Draw
-        try:
-            draw()
-        except Exception as e:
-            print("error drawing", e)
+        draw()
         time.sleep(0.2)
