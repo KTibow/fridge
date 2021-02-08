@@ -33,7 +33,8 @@ def draw():
     # Time
     global old_time
     current_time = [int(time_item) for time_item in now_time]
-    print(current_time)
+    if not current_time:
+        current_time = [0, 0]
     hours = current_time[0]
     if hours == 0:
         hours = 12
