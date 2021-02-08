@@ -31,6 +31,7 @@ def update_food():
 def draw():
     # Time
     global old_time
+    print(current_time)
     current_time = [int(time_item) for time_item in now_time]
     hours = current_time[0]
     if hours == 0:
