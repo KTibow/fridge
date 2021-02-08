@@ -26,7 +26,7 @@ magtag.add_text(
     ),
     text_scale=3,
 )
-magtag.set_text("Press any button in 4 seconds to start OTA.")
+magtag.set_text("Press for OTA")
 
 # Wait
 initial_time = time.monotonic()
