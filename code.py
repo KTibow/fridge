@@ -9,12 +9,17 @@ import socketpool # Set up a pool of sockets
 import ssl # Securely connect to APIs
 import adafruit_requests # Actually talk to APIs
 
-# Global stuff
-current_time = ""
-
 # Functions
 def update_time():
     global current_time
+    response = requests.get("http://worldtimeapi.org/api/ip").json()
+    current_time = response["datetime"].split("T")[1].split(":")[0:2]
+
+def update_grocy():
+    global current_time
+
+def draw():
+    pass
 
 # Initialize
 magtag = MagTag()
@@ -56,6 +61,10 @@ except Exception as e:
     magtag.set_text("Socket error.")
     raise e
 magtag.peripherals.neopixels[2] = (0, 255, 0)
+
+# Global stuff
+last_updated_time = ""
+current_time = ""
 
 # Event loop
 while True:
