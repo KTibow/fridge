@@ -26,7 +26,7 @@ def update_food():
         },
     ).json()
     for food in response:
-        print(food["name"], food["best_before_date"])
+        print(food["product"]["name"], food["best_before_date"])
 
 
 def draw():
