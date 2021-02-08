@@ -4,16 +4,16 @@ import terminalio
 from secrets import secrets
 
 old_time = ""
-unix_time = 1612742977
+now_time = ""
 overdue = ""
 leftovers = ""
 
 
 def update_time():
     # Time
-    global unix_time
+    global now_time
     response = requests.get("http://worldtimeapi.org/api/ip").json()
-    unix_time = response["unixtime"] + response["raw_offset"]
+    now_time = response["datetime"].split("T")[1].split(":")[0:2]
 
 
 def update_food():
@@ -31,8 +31,13 @@ def update_food():
 def draw():
     # Time
     global old_time
-    current_time = time.localtime(unix_time)
-    current_time = f"{current_time.tm_hour % 12}:{current_time.tm_min:02}"
+    current_time = [int(time_item) for time_item in current_time]
+    hours = current_time[0]
+    if hours == 0:
+        hours = 12
+    elif hours > 12 and hours < 24:
+        hours = hours - 12
+    current_time = f"{hours}:{current_time[1]:02}"
     if old_time != current_time:
         magtag.set_text(current_time)
     old_time = current_time
