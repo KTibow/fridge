@@ -72,6 +72,7 @@ def main():
                 update_food()
             except Exception as e:
                 print("Updating exception:", e)
+                raise e
             last_update = time.monotonic()
         # Draw
         draw()
