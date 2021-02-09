@@ -128,6 +128,7 @@ while True:
         last_time_update = time.monotonic()
     draw()
     if time.monotonic() - last_time_bump >= 0.25:  # Update time
+        print("Bumped time from", the_time)
         the_time[2] += 0.25
         last_time_bump += 0.25
         if the_time[2] == 60:
@@ -136,4 +137,5 @@ while True:
             if the_time[1] == 60:
                 the_time[0] += 1
                 the_time[1] -= 60
+        print("To", the_time)
     time.sleep(0.01)
