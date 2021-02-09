@@ -15,7 +15,7 @@ def update_time():
     response = requests.get("http://worldtimeapi.org/api/ip").json()
     current_time = response["datetime"].split("T")[1].split(":")
     current_time = current_time[0:2] + [current_time[2].split("-")[0]]
-    print(current_time)
+    raise Exception(current_time)
     current_time = [int(time_item) for time_item in current_time]
 
 def update_grocy():
