@@ -84,12 +84,10 @@ magtag.peripherals.neopixels[2] = (0, 255, 0)
 last_render_state = ""
 the_time = [3, 14, 15.9]
 last_time_bump = time.monotonic()
-time_update_interval = 500
+time_update_interval = 60
 last_time_update = time_update_interval * -1  # Trigger time update on first run
-grocy_update_interval = 500
-last_grocy_update = (
-    grocy_update_interval * -1
-)  # Trigger grocy update on first run
+grocy_update_interval = 300
+last_grocy_update = grocy_update_interval * -1  # Trigger grocy update on first run
 
 # Initial time pull
 magtag.peripherals.neopixels[1] = (0, 255, 100)
@@ -125,17 +123,17 @@ magtag.add_text(
 )
 while True:
     # Make API calls
-    if time.monotonic() - last_time_update > time_update_interval:
+    if time.monotonic() - last_time_update >= time_update_interval:
         update_time()
         last_time_update = time.monotonic()
     draw()
-    if time.monotonic() - last_time_bump > 0.25:  # Update time
+    if time.monotonic() - last_time_bump >= 0.25:  # Update time
         the_time[2] += 0.25
+        last_time_bump += 0.25
         if the_time[2] == 60:
             the_time[1] += 1
             the_time[2] -= 60
             if the_time[1] == 60:
                 the_time[0] += 1
                 the_time[1] -= 60
-        last_time_bump = time.monotonic()
     time.sleep(0.01)
