@@ -1,27 +1,39 @@
 # Imports
 from adafruit_magtag.magtag import MagTag  # Control the MagTag
-import terminalio # Get font
-import time # Wait for stuff
+import terminalio  # Get font
+import time  # Wait for stuff
+
 # API-related imports
-from secrets import secrets # WiFi passwords
-import wifi # Connect to WiFi
-import socketpool # Set up a pool of sockets
-import ssl # Securely connect to APIs
-import adafruit_requests # Actually talk to APIs
+from secrets import secrets  # WiFi passwords
+import wifi  # Connect to WiFi
+import socketpool  # Set up a pool of sockets
+import ssl  # Securely connect to APIs
+import adafruit_requests  # Actually talk to APIs
 
 # Functions
 def update_time():
-    global current_time
+    global the_time
     response = requests.get("http://worldtimeapi.org/api/ip").json()
-    current_time = response["datetime"].split("T")[1].split(":")
-    current_time = current_time[0:2] + [current_time[2].split("-")[0]]
-    current_time = [float(time_item) for time_item in current_time]
+    the_time = response["datetime"].split("T")[1].split(":")
+    the_time[2] = the_time[2].split("-")[0]
+    the_time = [int(the_time[0]), int(the_time[1]), float(the_time[2])]
+
 
 def update_grocy():
-    global current_time
+    global the_time
+
 
 def draw():
-    magtag.set_text(str(current_time[0:2]))
+    hours = the_time[0]
+    if hours == 0:
+        hours = 12
+    elif hours > 12 and hours < 24:
+        hours = hours - 12
+    status = f"{hours}:{the_time[1]:02}"
+    if last_render_state != status:
+        magtag.set_text(status)
+    last_render_state = status
+
 
 # Initialize
 magtag = MagTag()
@@ -66,12 +78,14 @@ magtag.peripherals.neopixels[2] = (0, 255, 0)
 
 # Global stuff
 last_render_state = ""
-current_time = [3, 14, 15.9]
+the_time = [3, 14, 15.9]
 last_time_bump = time.monotonic()
 time_update_interval = 500
-time_when_time_updated = time_update_interval * -1 # Trigger time update on first run
+time_when_time_updated = time_update_interval * -1  # Trigger time update on first run
 grocy_update_interval = 500
-time_when_grocy_updated = grocy_update_interval * -1 # Trigger grocy update on first run
+time_when_grocy_updated = (
+    grocy_update_interval * -1
+)  # Trigger grocy update on first run
 
 # Initial time pull
 magtag.peripherals.neopixels[1] = (0, 255, 100)
@@ -97,13 +111,13 @@ while True:
     if time.monotonic() - time_when_time_updated > time_update_interval:
         update_time()
     draw()
-    if time.monotonic() - last_time_bump > 0.25: # Update time
-        current_time[2] += 0.25
-        if current_time[2] > 60:
-            current_time[1] += 1
-            current_time[2] -= 60
-            if current_time[1] > 60:
-                current_time[0] += 1
-                current_time[1] -= 60
+    if time.monotonic() - last_time_bump > 0.25:  # Update time
+        the_time[2] += 0.25
+        if the_time[2] > 60:
+            the_time[1] += 1
+            the_time[2] -= 60
+            if the_time[1] > 60:
+                the_time[0] += 1
+                the_time[1] -= 60
         last_time_bump = time.monotonic()
     time.sleep(0.01)
