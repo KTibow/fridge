@@ -113,8 +113,8 @@ magtag.peripherals.neopixels[0] = (0, 255, 0)
 time.sleep(1)
 magtag.peripherals.neopixels.fill((0, 0, 0))
 magtag.peripherals.neopixel_disable = True
-magtag.set_text("", 0)
 magtag.set_text("", 1)
+magtag.set_text("", 0)
 magtag.add_text(
     text_font="Open Sans-26-r.pcf",
     text_position=(

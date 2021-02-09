@@ -19,14 +19,14 @@ magtag = MagTag()
 magtag.peripherals.neopixel_disable = False
 magtag.peripherals.neopixels.fill((0, 50, 50)) # Loading LED
 magtag.add_text(
-    text_font=terminalio.FONT,
+    text_font="Open Sans-18-r.pcf",
     text_position=(
-        10,
-        10,
+        5,
+        15,
     ),
-    text_scale=3,
+    text_scale=1,
 )
-magtag.set_text("Press for OTA")
+magtag.set_text("Press any button for OTA")
 
 # Wait
 initial_time = time.monotonic()
@@ -50,7 +50,7 @@ magtag.peripherals.neopixels.fill((0, 0, 0))
 if should_update:
     magtag.set_text("Updating...")
     magtag.add_text(
-        text_font=terminalio.FONT,
+        text_font="Open Sans-10-r.pcf",
         text_position=(
             10,
             50,
