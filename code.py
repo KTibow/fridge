@@ -131,10 +131,10 @@ while True:
         print("Bumped time from", the_time)
         the_time[2] += 0.25
         last_time_bump += 0.25
-        if the_time[2] == 60:
+        if the_time[2] >= 60:
             the_time[1] += 1
             the_time[2] -= 60
-            if the_time[1] == 60:
+            if the_time[1] >= 60:
                 the_time[0] += 1
                 the_time[1] -= 60
         print("To", the_time)
