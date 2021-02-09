@@ -121,6 +121,8 @@ magtag.add_text(
     ),
     text_scale=2,
 )
+# Update last bump
+last_time_bump = time.monotonic()
 while True:
     # Make API calls
     if time.monotonic() - last_time_update >= time_update_interval:
