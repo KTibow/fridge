@@ -13,7 +13,10 @@ import adafruit_requests  # Actually talk to APIs
 # Functions
 def update_time():
     global the_time
-    response = requests.get("http://worldtimeapi.org/api/ip").json()
+    try:
+        response = requests.get("http://worldtimeapi.org/api/ip").json()
+    except Exception as e:
+        print("Exception while fetching time:", e)
     the_time = response["datetime"].split("T")[1].split(":")
     the_time[2] = the_time[2].split("-")[0]
     the_time = [int(the_time[0]), int(the_time[1]), float(the_time[2])]
