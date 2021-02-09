@@ -24,6 +24,7 @@ def update_grocy():
 
 
 def draw():
+    global last_render_state
     hours = the_time[0]
     if hours == 0:
         hours = 12
