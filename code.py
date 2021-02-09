@@ -1,6 +1,5 @@
 # Imports
 from adafruit_magtag.magtag import MagTag  # Control the MagTag
-import terminalio  # Get font
 import time  # Wait for stuff
 
 # API-related imports
@@ -17,9 +16,10 @@ def update_time():
         response = requests.get("http://worldtimeapi.org/api/ip").json()
     except Exception as e:
         print("Exception while fetching time:", e)
-    the_time = response["datetime"].split("T")[1].split(":")
-    the_time[2] = the_time[2].split("-")[0]
-    the_time = [int(the_time[0]), int(the_time[1]), float(the_time[2])]
+    else:
+        the_time = response["datetime"].split("T")[1].split(":")
+        the_time[2] = the_time[2].split("-")[0]
+        the_time = [int(the_time[0]), int(the_time[1]), float(the_time[2])]
 
 
 def update_grocy():
@@ -35,26 +35,26 @@ def draw():
         hours = hours - 12
     status = f"{hours}:{the_time[1]:02}"
     if last_render_state != status:
-        magtag.set_text(status)
+        magtag.set_text(status, 2)
     last_render_state = status
 
 
 # Initialize
 magtag = MagTag()
 magtag.add_text(
-    text_font=terminalio.FONT,
+    text_font="Open Sans-26-r.pcf",
     text_position=(
-        10,
-        10,
+        5,
+        20,
     ),
-    text_scale=3,
+    text_scale=1,
 )
 magtag.peripherals.neopixel_disable = False
 magtag.peripherals.neopixels.fill((0, 0, 0))
 
 # Connect to WiFi
 magtag.add_text(
-    text_font=terminalio.FONT,
+    text_font="Open Sans-10-r.pcf",
     text_position=(
         10,
         50,
@@ -113,7 +113,16 @@ magtag.peripherals.neopixels[0] = (0, 255, 0)
 time.sleep(1)
 magtag.peripherals.neopixels.fill((0, 0, 0))
 magtag.peripherals.neopixel_disable = True
+magtag.set_text("", 0)
 magtag.set_text("", 1)
+magtag.add_text(
+    text_font="Open Sans-26-r.pcf",
+    text_position=(
+        10,
+        30,
+    ),
+    text_scale=2,
+)
 while True:
     # Make API calls
     if time.monotonic() - time_when_time_updated > time_update_interval:
