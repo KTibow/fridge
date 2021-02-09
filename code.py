@@ -21,7 +21,7 @@ def update_grocy():
     global current_time
 
 def draw():
-    pass
+    magtag.set_text(str(current_time[0:2]))
 
 # Initialize
 magtag = MagTag()
@@ -65,7 +65,9 @@ except Exception as e:
 magtag.peripherals.neopixels[2] = (0, 255, 0)
 
 # Global stuff
+last_render_state = ""
 current_time = [3, 14, 15.9]
+last_time_bump = time.monotonic()
 time_update_interval = 500
 time_when_time_updated = time_update_interval * -1 # Trigger time update on first run
 grocy_update_interval = 500
@@ -91,4 +93,17 @@ magtag.peripherals.neopixels[0] = (0, 255, 0)
 
 # Event loop
 while True:
+    # Make API calls
+    if time.monotonic() - time_when_time_updated > time_update_interval:
+        update_time()
+    draw()
+    if time.monotonic() - last_time_bump > 0.25: # Update time
+        current_time[2] += 0.25
+        if current_time[2] > 60:
+            current_time[1] += 1
+            current_time[2] -= 60
+            if current_time[1] > 60:
+                current_time[0] += 1
+                current_time[1] -= 60
+        last_time_bump = time.monotonic()
     time.sleep(0.01)
