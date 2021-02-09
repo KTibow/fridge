@@ -110,6 +110,10 @@ except Exception as e:
 magtag.peripherals.neopixels[0] = (0, 255, 0)
 
 # Event loop
+time.sleep(1)
+magtag.peripherals.neopixels.fill((0, 0, 0))
+magtag.peripherals.neopixel_disable = True
+magtag.set_text("", 1)
 while True:
     # Make API calls
     if time.monotonic() - time_when_time_updated > time_update_interval:
