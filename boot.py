@@ -1,4 +1,4 @@
-# Credit to icons8 for update icons.
+# Credit to icons8 for icons.
 # Imports
 from adafruit_magtag.magtag import MagTag  # Control the MagTag
 
