@@ -18,15 +18,7 @@ import microcontroller # Reset once it's downloaded
 magtag = MagTag()
 magtag.peripherals.neopixel_disable = False
 magtag.peripherals.neopixels.fill((0, 50, 50)) # Loading LED
-magtag.add_text(
-    text_font="Open Sans-18-r.pcf",
-    text_position=(
-        5,
-        15,
-    ),
-    text_scale=1,
-)
-magtag.set_text("Press any button for OTA")
+magtag.graphics.set_background("ota.bmp")
 
 # Wait
 initial_time = time.monotonic()
@@ -48,7 +40,14 @@ magtag.peripherals.neopixels.fill((0, 0, 0))
 
 # Update
 if should_update:
-    magtag.set_text("Updating...")
+    magtag.add_text(
+        text_font="Open Sans-18-r.pcf",
+        text_position=(
+            5,
+            15,
+        ),
+        text_scale=1,
+    )
     magtag.add_text(
         text_font="Open Sans-10-r.pcf",
         text_position=(
@@ -57,6 +56,7 @@ if should_update:
         ),
         text_scale=1,
     )
+    magtag.set_text("Updating...")
     magtag.set_text("1: WiFi, 2: Sockets, 3: Download, 4: Save", 1)
     magtag.peripherals.neopixels[3] = (255, 0, 0)
     # Set up WiFi
