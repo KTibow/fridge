@@ -1,9 +1,10 @@
+# Credit to icons8 for update icons.
 # Imports
 from adafruit_magtag.magtag import MagTag  # Control the MagTag
 
 # Should update question imports
 import time  # Wait for stuff
-import terminalio  # Get font
+import board  # Refresh display
 
 # OTA-related imports
 from secrets import secrets # WiFi passwords
@@ -19,6 +20,7 @@ magtag = MagTag()
 magtag.peripherals.neopixel_disable = False
 magtag.peripherals.neopixels.fill((0, 50, 50)) # Loading LED
 magtag.graphics.set_background("ota.bmp")
+board.DISPLAY.refresh()
 
 # Wait
 initial_time = time.monotonic()
@@ -40,24 +42,8 @@ magtag.peripherals.neopixels.fill((0, 0, 0))
 
 # Update
 if should_update:
-    magtag.add_text(
-        text_font="Open Sans-18-r.pcf",
-        text_position=(
-            5,
-            15,
-        ),
-        text_scale=1,
-    )
-    magtag.add_text(
-        text_font="Open Sans-10-r.pcf",
-        text_position=(
-            10,
-            50,
-        ),
-        text_scale=1,
-    )
-    magtag.set_text("Updating...")
-    magtag.set_text("1: WiFi, 2: Sockets, 3: Download, 4: Save", 1)
+    magtag.graphics.set_background("installing.bmp")
+    board.DISPLAY.refresh()
     magtag.peripherals.neopixels[3] = (255, 0, 0)
     # Set up WiFi
     try:
