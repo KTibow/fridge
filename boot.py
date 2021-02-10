@@ -20,6 +20,7 @@ magtag = MagTag()
 magtag.peripherals.neopixel_disable = False
 magtag.peripherals.neopixels.fill((0, 50, 50)) # Loading LED
 magtag.graphics.set_background("ota.bmp")
+time.sleep(board.DISPLAY.time_to_refresh)
 board.DISPLAY.refresh()
 while board.DISPLAY.busy:
     pass
@@ -52,7 +53,11 @@ if should_update:
     try:
         wifi.radio.connect(secrets["ssid"], secrets["password"])
     except Exception as e:
-        magtag.set_text("WiFi error.")
+        time.sleep(board.DISPLAY.time_to_refresh)
+        magtag.graphics.set_background("wifi_error.bmp")
+        board.DISPLAY.refresh()
+        while board.DISPLAY.busy:
+            pass
         raise e
     magtag.peripherals.neopixels[2] = (255, 100, 0)
     # Set up sockets
