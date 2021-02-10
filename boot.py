@@ -21,6 +21,8 @@ magtag.peripherals.neopixel_disable = False
 magtag.peripherals.neopixels.fill((0, 50, 50)) # Loading LED
 magtag.graphics.set_background("ota.bmp")
 board.DISPLAY.refresh()
+while board.DISPLAY.busy:
+    pass
 
 # Wait
 initial_time = time.monotonic()
@@ -42,6 +44,7 @@ magtag.peripherals.neopixels.fill((0, 0, 0))
 
 # Update
 if should_update:
+    time.sleep(board.DISPLAY.time_to_refresh)
     magtag.graphics.set_background("installing.bmp")
     board.DISPLAY.refresh()
     magtag.peripherals.neopixels[3] = (255, 0, 0)
