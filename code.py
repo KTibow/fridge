@@ -84,7 +84,7 @@ magtag.peripherals.neopixels[2] = (0, 255, 0)
 last_render_state = ""
 the_time = [3, 14, 15.9]
 last_time_bump = time.monotonic()
-time_update_interval = 60
+time_update_interval = 120
 last_time_update = time_update_interval * -1  # Trigger time update on first run
 grocy_update_interval = 300
 last_grocy_update = grocy_update_interval * -1  # Trigger grocy update on first run
@@ -129,10 +129,10 @@ while True:
         update_time()
         last_time_update = time.monotonic()
     draw()
-    if time.monotonic() - last_time_bump >= 0.25:  # Update time
+    if time.monotonic() - last_time_bump >= 0.5:  # Update time
         print("Bumped time from", the_time)
-        the_time[2] += 0.25
-        last_time_bump += 0.25
+        the_time[2] += 0.5
+        last_time_bump += 0.5
         if the_time[2] >= 60:
             the_time[1] += 1
             the_time[2] -= 60
@@ -140,4 +140,4 @@ while True:
                 the_time[0] += 1
                 the_time[1] -= 60
         print("To", the_time)
-    time.sleep(0.01)
+    time.sleep(0.1)
