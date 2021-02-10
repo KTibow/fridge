@@ -89,7 +89,11 @@ if should_update:
     finally:
         storage.remount("/", True)
     # Tell user that it's done
-    magtag.set_text("Update complete.")
+    time.sleep(board.DISPLAY.time_to_refresh)
+    magtag.graphics.set_background("updates_complete.bmp")
+    board.DISPLAY.refresh()
+    while board.DISPLAY.busy:
+        pass
     magtag.peripherals.neopixels.fill((0, 0, 0))
     time.sleep(2)
     microcontroller.reset()
