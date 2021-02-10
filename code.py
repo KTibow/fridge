@@ -16,11 +16,13 @@ import adafruit_requests  # Actually talk to APIs
 # Functions
 def update_time():
     global the_time
+    global the_date
     try:
         response = requests.get("http://worldtimeapi.org/api/ip").json()
     except Exception as e:
         print("Exception while fetching time:", e)
     else:
+        the_date = response["datetime"].split("T")
         the_time = response["datetime"].split("T")[1].split(":")
         the_time[2] = the_time[2].split("-")[0]
         the_time = [int(the_time[0]), int(the_time[1]), float(the_time[2])]
@@ -88,6 +90,7 @@ last_time_bump = time.monotonic()
 time_update_interval = 120
 last_time_update = time_update_interval * -1  # Trigger time update on first run
 # Grocy
+the_date = [2021, 2, 10]
 grocy_update_interval = 300
 last_grocy_update = grocy_update_interval * -1  # Trigger grocy update on first run
 
