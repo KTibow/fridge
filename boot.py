@@ -65,7 +65,7 @@ if should_update:
         pool = socketpool.SocketPool(wifi.radio)
         requests = adafruit_requests.Session(pool, ssl.create_default_context())
     except Exception as e:
-        magtag.set_text("Socket error.")
+        magtag.set_text("Socket error " + e)
         raise e
     # Download code
     magtag.peripherals.neopixels[1] = (255, 255, 0)
@@ -74,7 +74,7 @@ if should_update:
             "https://raw.githubusercontent.com/KTibow/fridge/main/code.py"
         )
     except Exception as e:
-        magtag.set_text("Download error.")
+        magtag.set_text("Download error " + e)
         raise e
     # Change code
     magtag.peripherals.neopixels[0] = (0, 255, 0)
@@ -84,7 +84,7 @@ if should_update:
             the_code.write(response.text)
             the_code.flush()
     except Exception as e:
-        magtag.set_text("Changing code error.")
+        magtag.set_text("Changing code error " + e)
         raise e
     finally:
         storage.remount("/", True)
