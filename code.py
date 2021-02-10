@@ -159,7 +159,7 @@ magtag.add_text(
         80,
     ),
     text_scale=1,
-    text_wrap=50,
+    text_wrap=40,
     line_spacing=0.66,
 )
 # Update last bump
