@@ -1,6 +1,10 @@
+# Credit to icons8 for icons
 # Imports
 from adafruit_magtag.magtag import MagTag  # Control the MagTag
 import time  # Wait for stuff
+
+# Display-related imports
+import board  # Refresh display
 
 # API-related imports
 from secrets import secrets  # WiFi passwords
@@ -35,39 +39,26 @@ def draw():
         hours = hours - 12
     status = f"{hours}:{the_time[1]:02}"
     if last_render_state != status:
-        magtag.set_text(status, 2)
+        magtag.set_text(status)
     last_render_state = status
 
 
 # Initialize
 magtag = MagTag()
-magtag.add_text(
-    text_font="Open Sans-26-r.pcf",
-    text_position=(
-        5,
-        20,
-    ),
-    text_scale=1,
-)
 magtag.peripherals.neopixel_disable = False
 magtag.peripherals.neopixels.fill((0, 0, 0))
 
 # Connect to WiFi
-magtag.add_text(
-    text_font="Open Sans-10-r.pcf",
-    text_position=(
-        10,
-        50,
-    ),
-    text_scale=1,
-)
-magtag.set_text("Connecting...")
-magtag.set_text("1: WiFi, 2: Sockets, 3: Time, 4: Grocy", 1)
+time.sleep(board.DISPLAY.time_to_refresh)
+magtag.graphics.set_background("connecting.bmp")
+board.DISPLAY.refresh()
 magtag.peripherals.neopixels[3] = (0, 255, 100)
 try:
     wifi.radio.connect(secrets["ssid"], secrets["password"])
 except Exception as e:
-    magtag.set_text("WiFi error.")
+    time.sleep(board.DISPLAY.time_to_refresh)
+    magtag.graphics.set_background("wifi_error.bmp")
+    board.DISPLAY.refresh()
     raise e
 magtag.peripherals.neopixels[3] = (0, 255, 0)
 # Sockets
@@ -94,7 +85,9 @@ magtag.peripherals.neopixels[1] = (0, 255, 100)
 try:
     update_time()
 except Exception as e:
-    magtag.set_text("Time API error.")
+    time.sleep(board.DISPLAY.time_to_refresh)
+    magtag.graphics.set_background("api_error.bmp")
+    board.DISPLAY.refresh()
     raise e
 magtag.peripherals.neopixels[1] = (0, 255, 0)
 
@@ -103,7 +96,9 @@ magtag.peripherals.neopixels[0] = (0, 255, 100)
 try:
     update_grocy()
 except Exception as e:
-    magtag.set_text("Grocy API error.")
+    time.sleep(board.DISPLAY.time_to_refresh)
+    magtag.graphics.set_background("api_error.bmp")
+    board.DISPLAY.refresh()
     raise e
 magtag.peripherals.neopixels[0] = (0, 255, 0)
 
@@ -111,8 +106,7 @@ magtag.peripherals.neopixels[0] = (0, 255, 0)
 time.sleep(1)
 magtag.peripherals.neopixels.fill((0, 0, 0))
 magtag.peripherals.neopixel_disable = True
-magtag.set_text("", 1)
-magtag.set_text("", 0)
+magtag.graphics.set_background(0xFFFFFF)
 magtag.add_text(
     text_font="Open Sans-26-r.pcf",
     text_position=(
@@ -130,7 +124,7 @@ while True:
         last_time_update = time.monotonic()
     draw()
     if time.monotonic() - last_time_bump >= 0.5:  # Update time
-        print("Bumped time from", the_time)
+        print("Time from", the_time)
         the_time[2] += 0.5
         last_time_bump += 0.5
         if the_time[2] >= 60:
