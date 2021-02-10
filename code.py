@@ -54,7 +54,7 @@ def update_grocy():
                     food_is_overdue = True
                 elif food_date[1] == the_date[1]:
                     if food_date[2] <= the_date[2]:
-                    food_is_overdue = True
+                        food_is_overdue = True
             if food_is_overdue:
                 overdue_food_temp.append(food["product"]["name"])
         overdue_food = overdue_food_temp.copy()
