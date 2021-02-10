@@ -23,6 +23,7 @@ def update_time():
         print("Exception while fetching time:", e)
     else:
         the_date = response["datetime"].split("T")
+        the_date = [int(date_item) for date_item in the_date]
         the_time = response["datetime"].split("T")[1].split(":")
         the_time[2] = the_time[2].split("-")[0]
         the_time = [int(the_time[0]), int(the_time[1]), float(the_time[2])]
