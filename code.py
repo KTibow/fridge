@@ -27,7 +27,15 @@ def update_time():
 
 
 def update_grocy():
-    global the_time
+    response = requests.get(
+        secrets["endpoint"] + "/api/stock",
+        headers={
+            "GROCY-API-KEY": secrets["api_key"],
+            "accept": "application/json",
+        },
+    ).json()
+    for food in response:
+        print(food["product"]["name"], food["best_before_date"])
 
 
 def draw():
@@ -72,11 +80,14 @@ except Exception as e:
 magtag.peripherals.neopixels[2] = (0, 255, 0)
 
 # Global stuff
+# General
 last_render_state = ""
+# Time
 the_time = [3, 14, 15.9]
 last_time_bump = time.monotonic()
 time_update_interval = 120
 last_time_update = time_update_interval * -1  # Trigger time update on first run
+# Grocy
 grocy_update_interval = 300
 last_grocy_update = grocy_update_interval * -1  # Trigger grocy update on first run
 
@@ -122,6 +133,9 @@ while True:
     if time.monotonic() - last_time_update >= time_update_interval:
         update_time()
         last_time_update = time.monotonic()
+    if time.monotonic() - last_grocy_update >= grocy_update_interval:
+        update_grocy()
+        last_grocy_update = time.monotonic()
     draw()
     if time.monotonic() - last_time_bump >= 0.5:  # Update time
         print("Time from", the_time)
