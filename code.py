@@ -145,7 +145,7 @@ magtag.peripherals.neopixels[0] = (0, 255, 0)
 time.sleep(1)
 magtag.peripherals.neopixels.fill((0, 0, 0))
 magtag.peripherals.neopixel_disable = True
-magtag.graphics.set_background(0xFFFFFF)
+magtag.graphics.set_background("main_ui.bmp"))
 magtag.add_text(
     text_font="Open Sans-26-r.pcf",
     text_position=(
@@ -157,8 +157,8 @@ magtag.add_text(
 magtag.add_text(
     text_font="Open Sans-10-r.pcf",
     text_position=(
-        10,
-        80,
+        50,
+        70,
     ),
     text_scale=1,
     text_wrap=40,
