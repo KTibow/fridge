@@ -170,8 +170,8 @@ magtag.add_text(
 magtag.add_text(
     text_font="Open Sans-10-r.pcf",
     text_position=(
-        40,
-        63,
+        150,
+        10,
     ),
     text_scale=1,
     text_wrap=40,
@@ -181,7 +181,7 @@ magtag.add_text(
     text_font="Open Sans-10-r.pcf",
     text_position=(
         40,
-        103,
+        63,
     ),
     text_scale=1,
     text_wrap=40,
