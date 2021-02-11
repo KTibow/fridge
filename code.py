@@ -31,6 +31,7 @@ def update_time():
 
 def update_grocy():
     global overdue_food
+    global ready_to_eat_food
     try:
         response = requests.get(
             secrets["endpoint"] + "/api/stock",
@@ -43,6 +44,7 @@ def update_grocy():
         print("Exception while fetching food:", e)
     else:
         overdue_food_temp = []
+        ready_to_eat_food_temp = []
         for food in response:
             food_date = food["best_before_date"].split("-")
             food_date = [int(food_date_item) for food_date_item in food_date]
@@ -57,7 +59,10 @@ def update_grocy():
                         food_is_overdue = True
             if food_is_overdue:
                 overdue_food_temp.append(food["product"]["name"])
+            elif "Ready To Eat" in food["product"]["name"]:
+                ready_to_eat_food_temp.append(food["product"]["name"])
         overdue_food = overdue_food_temp.copy()
+        ready_to_eat_food = ready_to_eat_food_temp.copy()
 
 
 def draw():
@@ -68,13 +73,18 @@ def draw():
     elif hours > 12 and hours < 24:
         hours = hours - 12
     time_status = f"{hours}:{the_time[1]:02}"
-    food_status = "Throw away: " + ", ".join(overdue_food)
+    old_food_status = ", ".join(overdue_food)
+    ready_food_status = ", ".join(ready_to_eat_food)
+    combined_status = time_status + old_food_status + ready_food_status
     if not overdue_food:
         food_status = f"Nothing is overdue."
-    if last_render_state != time_status + food_status:
+    if not ready_to_eat_food:
+        old_food_status = f"Nothing is ready to eat."
+    if last_render_state != combined_status:
         magtag.set_text(time_status)
-        magtag.set_text(food_status, 1)
-    last_render_state = time_status + food_status
+        magtag.set_text(old_food_status, 1)
+        magtag.set_text(ready_food_status, 2)
+    last_render_state = combined_status
 
 
 # Initialize
@@ -116,6 +126,7 @@ last_time_update = time_update_interval * -1  # Trigger time update on first run
 # Grocy
 the_date = [2021, 2, 10]
 overdue_food = []
+ready_to_eat_food = []
 grocy_update_interval = 300
 last_grocy_update = grocy_update_interval * -1  # Trigger grocy update on first run
 
@@ -157,8 +168,18 @@ magtag.add_text(
 magtag.add_text(
     text_font="Open Sans-10-r.pcf",
     text_position=(
-        33,
+        38,
         63,
+    ),
+    text_scale=1,
+    text_wrap=40,
+    line_spacing=0.66,
+)
+magtag.add_text(
+    text_font="Open Sans-10-r.pcf",
+    text_position=(
+        38,
+        103,
     ),
     text_scale=1,
     text_wrap=40,
