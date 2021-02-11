@@ -60,7 +60,9 @@ def update_grocy():
             if food_is_overdue:
                 overdue_food_temp.append(food["product"]["name"])
             elif "Ready To Eat" in food["product"]["name"]:
-                ready_to_eat_food_temp.append(food["product"]["name"])
+                ready_to_eat_food_temp.append(
+                    food["product"]["name"].replace(" - Ready To Eat", "")
+                )
         overdue_food = overdue_food_temp.copy()
         ready_to_eat_food = ready_to_eat_food_temp.copy()
 
@@ -168,7 +170,7 @@ magtag.add_text(
 magtag.add_text(
     text_font="Open Sans-10-r.pcf",
     text_position=(
-        38,
+        40,
         63,
     ),
     text_scale=1,
@@ -178,7 +180,7 @@ magtag.add_text(
 magtag.add_text(
     text_font="Open Sans-10-r.pcf",
     text_position=(
-        38,
+        40,
         103,
     ),
     text_scale=1,
