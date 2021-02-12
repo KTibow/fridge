@@ -70,17 +70,17 @@ if should_update:
     # Download code
     magtag.peripherals.neopixels[1] = (255, 255, 0)
     try:
-        response = requests.get(
+        main_code_text = requests.get(
             "https://raw.githubusercontent.com/KTibow/fridge/main/code.py"
-        )
+        ).text
     except Exception as e:
         print(e)
         magtag.set_text("Download error " + str(e))
         raise e
     try:
-        other_response = requests.get(
+        animations_code_text = requests.get(
             "https://raw.githubusercontent.com/KTibow/fridge/main/animations.py"
-        )
+        ).text
     except Exception as e:
         print(e)
         magtag.set_text("Download error " + str(e))
@@ -90,10 +90,10 @@ if should_update:
     try:
         storage.remount("/", False)
         with open("/code.py", "w") as the_code:
-            the_code.write(response.text)
+            the_code.write(main_code_text)
             the_code.flush()
         with open("/animations.py", "w") as the_code:
-            the_code.write(other_response.text)
+            the_code.write(animations_code_text)
             the_code.flush()
     except Exception as e:
         print(e)
