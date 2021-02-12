@@ -24,7 +24,9 @@ def countdown(offset_1, offset_2, offset_3, speed, magtag, eval_function=lambda:
         while time.monotonic() - initial_time < speed / 4:
             j = (time.monotonic() - initial_time) * -1 + (speed / 4)
             magtag.peripherals.neopixels[i] = (j * offset_1, j * offset_2, j * offset_3)
-            eval_function()
+            response = eval_function()
+            if response is not None:
+                return response
 
 
 def sin_animate(offset_1, offset_2, offset_3, start_pixel, stop_pixel, magtag):
