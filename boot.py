@@ -5,21 +5,21 @@ from adafruit_magtag.magtag import MagTag  # Control the MagTag
 # Should update question imports
 import time  # Wait for stuff
 import board  # Refresh display
-from animations import countdown # Countdown
+from animations import countdown  # Countdown
 
 # OTA-related imports
-from secrets import secrets # WiFi passwords
-import wifi # Connect to WiFi
-import socketpool # Set up a pool of sockets
-import ssl # Securely connect to GitHub for code
-import adafruit_requests # Download the code
+from secrets import secrets  # WiFi passwords
+import wifi  # Connect to WiFi
+import socketpool  # Set up a pool of sockets
+import ssl  # Securely connect to GitHub for code
+import adafruit_requests  # Download the code
 import storage  # Mount the code
-import microcontroller # Reset once it's downloaded
+import microcontroller  # Reset once it's downloaded
 
 # Ask user if they want to go
 magtag = MagTag()
 magtag.peripherals.neopixel_disable = False
-magtag.peripherals.neopixels.fill((0, 50, 50)) # Loading LED
+magtag.peripherals.neopixels.fill((0, 50, 50))  # Loading LED
 magtag.graphics.set_background("ota.bmp")
 time.sleep(board.DISPLAY.time_to_refresh)
 board.DISPLAY.refresh()
@@ -29,12 +29,16 @@ while board.DISPLAY.busy:
 # Wait
 initial_time = time.monotonic()
 should_update = False
+
+
 def send_response():
     if magtag.peripherals.any_button_pressed:
         return True
-if countdown(0, 255, 255, 3, magtag, send_response):
+
+
+if countdown(0, 50, 50, 3, magtag, send_response):
     should_update = True
-    
+
 
 magtag.peripherals.neopixels.fill((0, 0, 0))
 
