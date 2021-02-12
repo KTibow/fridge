@@ -77,16 +77,17 @@ def draw():
     time_status = f"{hours}:{the_time[1]:02}"
     old_food_status = ", ".join(overdue_food)
     ready_food_status = ", ".join(ready_to_eat_food)
-    combined_status = time_status + old_food_status + ready_food_status
     if not overdue_food:
         food_status = f"Nothing is overdue."
     if not ready_to_eat_food:
         old_food_status = f"Nothing is ready to eat."
-    if last_render_state != combined_status:
+    if last_render_state[0] != time_status:
         magtag.set_text(time_status)
+    if last_render_state[1] != old_food_status:
         magtag.set_text(old_food_status, 1)
+    if last_render_state[2] != ready_food_status:
         magtag.set_text(ready_food_status, 2)
-    last_render_state = combined_status
+    last_render_state = [time_status, old_food_status, ready_food_status]
 
 
 # Initialize
@@ -119,7 +120,7 @@ magtag.peripherals.neopixels[2] = (0, 255, 0)
 
 # Global stuff
 # General
-last_render_state = ""
+last_render_state = [None, None, None]
 # Time
 the_time = [3, 14, 15.9]
 last_time_bump = time.monotonic()
@@ -162,20 +163,22 @@ magtag.graphics.set_background("main_ui.bmp")
 magtag.add_text(
     text_font="Open Sans-26-r.pcf",
     text_position=(
-        10,
-        30,
+        2,
+        2,
     ),
     text_scale=2,
+    text_anchor_point=(0, 0),
 )
 magtag.add_text(
     text_font="Open Sans-10-r.pcf",
     text_position=(
-        218,
-        10,
+        210,
+        5,
     ),
     text_scale=1,
-    text_wrap=11,
+    text_wrap=15,
     line_spacing=0.75,
+    text_anchor_point=(0, 0),
 )
 magtag.add_text(
     text_font="Open Sans-10-r.pcf",
