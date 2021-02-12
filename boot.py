@@ -96,7 +96,8 @@ if should_update:
             the_code.write(other_response.text)
             the_code.flush()
     except Exception as e:
-        magtag.set_text("Changing code error " + e)
+        print(e)
+        magtag.set_text("Changing code error " + str(e))
         raise e
     finally:
         storage.remount("/", True)
