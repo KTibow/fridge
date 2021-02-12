@@ -5,7 +5,7 @@ from adafruit_magtag.magtag import MagTag  # Control the MagTag
 # Should update question imports
 import time  # Wait for stuff
 import board  # Refresh display
-import animations # Countdown
+from animations import countdown # Countdown
 
 # OTA-related imports
 from secrets import secrets # WiFi passwords
