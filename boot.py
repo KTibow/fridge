@@ -5,6 +5,7 @@ from adafruit_magtag.magtag import MagTag  # Control the MagTag
 # Should update question imports
 import time  # Wait for stuff
 import board  # Refresh display
+import animations # Countdown
 
 # OTA-related imports
 from secrets import secrets # WiFi passwords
@@ -28,18 +29,12 @@ while board.DISPLAY.busy:
 # Wait
 initial_time = time.monotonic()
 should_update = False
-while time.monotonic() - initial_time < 4:
-    if time.monotonic() - initial_time < 1:
-        magtag.peripherals.neopixels.fill((0, 50, 0))
-    elif time.monotonic() - initial_time < 2:
-        magtag.peripherals.neopixels.fill((50, 50, 0))
-    elif time.monotonic() - initial_time < 3:
-        magtag.peripherals.neopixels.fill((50, 20, 0))
-    else:
-        magtag.peripherals.neopixels.fill((50, 0, 0))
+def send_response():
     if magtag.peripherals.any_button_pressed:
-        should_update = True
-        break
+        return True
+if countdown(0, 255, 50, 4, magtag, send_response):
+    should_update = True
+    
 
 magtag.peripherals.neopixels.fill((0, 0, 0))
 
