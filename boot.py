@@ -74,14 +74,16 @@ if should_update:
             "https://raw.githubusercontent.com/KTibow/fridge/main/code.py"
         )
     except Exception as e:
-        magtag.set_text("Download error " + e)
+        print(e)
+        magtag.set_text("Download error " + str(e))
         raise e
     try:
         other_response = requests.get(
             "https://raw.githubusercontent.com/KTibow/fridge/main/animations.py"
         )
     except Exception as e:
-        magtag.set_text("Download error " + e)
+        print(e)
+        magtag.set_text("Download error " + str(e))
         raise e
     # Change code
     magtag.peripherals.neopixels[0] = (0, 255, 0)
