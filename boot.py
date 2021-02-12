@@ -32,7 +32,7 @@ should_update = False
 def send_response():
     if magtag.peripherals.any_button_pressed:
         return True
-if countdown(0, 255, 50, 4, magtag, send_response):
+if countdown(0, 255, 255, 3, magtag, send_response):
     should_update = True
     
 
