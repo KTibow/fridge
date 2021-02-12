@@ -78,9 +78,9 @@ def draw():
     old_food_status = ", ".join(overdue_food)
     ready_food_status = ", ".join(ready_to_eat_food)
     if not overdue_food:
-        food_status = f"Nothing is overdue."
+        overdue_food = f"Nothing is overdue."
     if not ready_to_eat_food:
-        old_food_status = f"Nothing is ready to eat."
+        ready_food_status = f"Nothing is ready to eat."
     if last_render_state[0] != time_status:
         magtag.set_text(time_status)
     if last_render_state[1] != old_food_status:
