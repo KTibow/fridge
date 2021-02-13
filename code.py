@@ -78,7 +78,7 @@ def draw():
     old_food_status = ", ".join(overdue_food)
     ready_food_status = ", ".join(ready_to_eat_food)
     if not overdue_food:
-        overdue_food = f"Nothing is overdue."
+        old_food_status = f"Nothing is overdue."
     if not ready_to_eat_food:
         ready_food_status = f"Nothing is ready to eat."
     if last_render_state[0] != time_status:
