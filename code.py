@@ -224,4 +224,6 @@ while True:
                 the_time[0] += 1
                 the_time[1] -= 60
         print("To", the_time)
+    if magtag.peripherals.battery < 3.3:
+        break
     time.sleep(0.1)
