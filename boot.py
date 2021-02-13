@@ -5,7 +5,14 @@ from adafruit_magtag.magtag import MagTag  # Control the MagTag
 # Should update question imports
 import time  # Wait for stuff
 import board  # Refresh display
-from animations import countdown  # Countdown
+
+countdown_enabled = False
+try:
+    from animations import countdown  # Countdown
+
+    countdown_enabled = True
+except Exception:
+    pass
 
 # OTA-related imports
 from secrets import secrets  # WiFi passwords
@@ -36,7 +43,9 @@ def send_response():
         return True
 
 
-if countdown(0, 50, 50, 3, magtag, send_response):
+if (
+    countdown_enabled and countdown(0, 50, 50, 3, magtag, send_response)
+) or not countdown_enabled:
     should_update = True
 
 
