@@ -24,9 +24,11 @@ def update_time():
         )
 
 
-def update_grocy(step=0, data=None):
+def update_grocy(step=0, data=None, recursion=0):
     global overdue_food
     global ready_to_eat_food
+    if recursion > 5:
+        return
     if step == 0:  # Get userfields
         try:
             response = magtag.network.fetch(
@@ -39,14 +41,14 @@ def update_grocy(step=0, data=None):
         except Exception as e:
             print("Exception while fetching food:", e)
             print("Trying again.")
-            update_grocy()
+            update_grocy(recursion=recursion + 1)
         else:
-            food_to_count_as_ready = []
+            data = []
             for food in response:
                 if food["userfields"]:
                     food_to_count_as_ready.append(food["name"])
-            update_grocy(step=1, data=food_to_count_as_ready)
-    elif step == 1:  # Get what's in stock
+            step = 1
+    if step == 1:  # Get what's in stock
         try:
             response = magtag.network.fetch(
                 secrets["endpoint"] + "/api/stock",
@@ -58,30 +60,28 @@ def update_grocy(step=0, data=None):
         except Exception as e:
             print("Exception while fetching food:", e)
             print("Trying again.")
-            update_grocy(step=1, data=data)
+            update_grocy(step=1, data=data, recursion=recursion + 1)
         else:
             ready_to_eat_food = []
+            overdue_food = []
             for food in response:
                 if food["product"]["name"] in data and int(food["amount"]) > 0:
                     ready_to_eat_food.append(food["product"]["name"])
+                food_date = food["best_before_date"].split("-")
+                if (
+                    time.localtime().tm_year < int(food_date[0])
+                    or (
+                        time.localtime().tm_year == int(food_date[0])
+                        and time.localtime().tm_mon < int(food_date[1])
+                    )
+                    or (
+                        time.localtime().tm_year == int(food_date[0])
+                        and time.localtime().tm_mon == int(food_date[1])
+                        and time.localtime().tm_mday <= int(food_date[2])
+                    )
+                ):
+                    overdue_food.append(food["product"]["name"])
             update_grocy(step=2)
-    elif step == 2:  # Get what's overdue
-        try:
-            response = magtag.network.fetch(
-                secrets["endpoint"] + "/api/stock/volatile",
-                headers={
-                    "GROCY-API-KEY": secrets["api_key"],
-                    "accept": "application/json",
-                },
-            ).json()
-        except Exception as e:
-            print("Exception while fetching food:", e)
-            print("Trying again.")
-            update_grocy(step=2)
-        else:
-            overdue_food = []
-            for food in response["overdue_products"]:
-                overdue_food.append(food["product"]["name"])
 
 
 def draw():
