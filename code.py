@@ -32,6 +32,21 @@ def update_time():
 def update_grocy():
     global overdue_food
     global ready_to_eat_food
+    food_to_count_as_ready = []
+    try:
+        response = requests.get(
+            secrets["endpoint"] + "/api/objects/products",
+            headers={
+                "GROCY-API-KEY": secrets["api_key"],
+                "accept": "application/json",
+            },
+        ).json()
+    except Exception as e:
+        print("Exception while fetching food:", e)
+    else:
+        for food in response:
+            if food["userfields"]:
+                food_to_count_as_ready.append(food["name"])
     try:
         response = requests.get(
             secrets["endpoint"] + "/api/stock",
@@ -43,28 +58,26 @@ def update_grocy():
     except Exception as e:
         print("Exception while fetching food:", e)
     else:
-        overdue_food_temp = []
         ready_to_eat_food_temp = []
         for food in response:
-            food_date = food["best_before_date"].split("-")
-            food_date = [int(food_date_item) for food_date_item in food_date]
-            food_is_overdue = False
-            if food_date[0] < the_date[0]:
-                food_is_overdue = True
-            elif food_date[0] == the_date[0]:
-                if food_date[1] < the_date[1]:
-                    food_is_overdue = True
-                elif food_date[1] == the_date[1]:
-                    if food_date[2] <= the_date[2]:
-                        food_is_overdue = True
-            if food_is_overdue:
-                overdue_food_temp.append(food["product"]["name"])
-            elif "Ready To Eat" in food["product"]["name"]:
-                ready_to_eat_food_temp.append(
-                    food["product"]["name"].replace(" - Ready To Eat", "")
-                )
-        overdue_food = overdue_food_temp.copy()
+            if food["product"]["name"] in food_to_count_as_ready and int(food["amount"]) > 0:
+                ready_to_eat_food_temp.append(food["product"]["name"])
         ready_to_eat_food = ready_to_eat_food_temp.copy()
+    try:
+        response = requests.get(
+            secrets["endpoint"] + "/api/stock/volatile",
+            headers={
+                "GROCY-API-KEY": secrets["api_key"],
+                "accept": "application/json",
+            },
+        ).json()
+    except Exception as e:
+        print("Exception while fetching food:", e)
+    else:
+        overdue_food_temp = []
+        for food in response["overdue_products"]:
+            overdue_food_temp.append(food["product"]["name"])
+        overdue_food = overdue_food_temp.copy()
 
 
 def draw():
