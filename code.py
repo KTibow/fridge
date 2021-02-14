@@ -46,7 +46,7 @@ def update_grocy(step=0, data=None, recursion=0):
             data = []
             for food in response:
                 if food["userfields"]:
-                    food_to_count_as_ready.append(food["name"])
+                    data.append(food["name"])
             step = 1
     if step == 1:  # Get what's in stock
         try:
