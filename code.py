@@ -201,7 +201,7 @@ magtag.add_text(
     ),
     text_scale=1,
     text_wrap=40,
-    line_spacing=0.66,
+    line_spacing=0.75,
 )
 # Update last bump
 last_time_bump = time.monotonic()
