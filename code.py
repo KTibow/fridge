@@ -69,15 +69,15 @@ def update_grocy(step=0, data=None, recursion=0):
                     ready_to_eat_food.append(food["product"]["name"])
                 food_date = food["best_before_date"].split("-")
                 if (
-                    time.localtime().tm_year < int(food_date[0])
+                    time.localtime().tm_year > int(food_date[0])
                     or (
                         time.localtime().tm_year == int(food_date[0])
-                        and time.localtime().tm_mon < int(food_date[1])
+                        and time.localtime().tm_mon > int(food_date[1])
                     )
                     or (
                         time.localtime().tm_year == int(food_date[0])
                         and time.localtime().tm_mon == int(food_date[1])
-                        and time.localtime().tm_mday <= int(food_date[2])
+                        and time.localtime().tm_mday > int(food_date[2])
                     )
                 ):
                     overdue_food.append(food["product"]["name"])
