@@ -81,7 +81,6 @@ def update_grocy(step=0, data=None, recursion=0):
                     )
                 ):
                     overdue_food.append(food["product"]["name"])
-            update_grocy(step=2)
 
 
 def draw():
