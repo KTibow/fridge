@@ -33,7 +33,9 @@ def render_wifi():
     builtin_neopixels[builtin_neopixel_right] = (255, 255, 255)
     external_neopixels.fill((128, 0, 255))
     for i in range(8, 30):
-        if i > builtin_neopixel_left - 4 and i < builtin_neopixel_left:
+        if i > external_neopixel_left - 4 and i < external_neopixel_left:
+            external_neopixels[i] = (255, 255, 255)
+        if i > external_neopixel_right and i < external_neopixel_right + 4:
             external_neopixels[i] = (255, 255, 255)
 
 
