@@ -65,7 +65,7 @@ def update_grocy(step=0, data=None, recursion=0):
             ready_to_eat_food = []
             overdue_food = []
             for food in response:
-                if food["product"]["name"] in data and int(food["amount"]) > 0:
+                if food["product"]["name"] in data and float(food["amount"]) > 0:
                     ready_to_eat_food.append(food["product"]["name"])
                 food_date = food["best_before_date"].split("-")
                 if (
