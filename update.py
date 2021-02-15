@@ -10,6 +10,7 @@ with open("/updating.bmp", "rb") as bitmap_file:
     group.append(tile_grid)
     epd.show(group)
     epd.refresh()
+
 # Initial neopixel config
 import digitalio
 
@@ -18,8 +19,9 @@ neopixels_enabled.switch_to_output()
 neopixels_enabled.value = False  # It is false, but it's also LOW.
 import neopixel
 
-builtin_neopixels = neopixel.NeoPixel(board.NEOPIXEL, 4)
-external_neopixels = neopixel.NeoPixel(board.A1, 30)
+builtin_neopixels = neopixel.NeoPixel(board.NEOPIXEL, 4, auto_write = False)
+external_neopixels = neopixel.NeoPixel(board.A1, 30, auto_write = False)
+
 # Pattern
 builtin_neopixel_left = 1
 builtin_neopixel_right = 2
@@ -37,6 +39,8 @@ def render_wifi():
             external_neopixels[i] = (255, 255, 255)
         if i > external_neopixel_right and i < external_neopixel_right + 4:
             external_neopixels[i] = (255, 255, 255)
+    builtin_neopixels.show()
+    external_neopixels.show()
 
 
 # Wait
