@@ -24,7 +24,7 @@ def update_time():
         )
 
 
-def update_grocy(step=0, data=None, recursion=0):
+def update_grocy(step=0, userfields=None, recursion=0):
     global overdue_food
     global ready_to_eat_food
     if recursion > 5:
@@ -43,10 +43,9 @@ def update_grocy(step=0, data=None, recursion=0):
             print("Trying again.")
             update_grocy(recursion=recursion + 1)
         else:
-            data = []
+            userfields = {}
             for food in response:
-                if food["userfields"]:
-                    data.append(food["name"])
+                userfields[food["name"]] = food["userfields"]
             step = 1
     if step == 1:  # Get what's in stock
         try:
@@ -60,13 +59,14 @@ def update_grocy(step=0, data=None, recursion=0):
         except Exception as e:
             print("Exception while fetching food:", e)
             print("Trying again.")
-            update_grocy(step=1, data=data, recursion=recursion + 1)
+            update_grocy(step=1, userfields=userfields, recursion=recursion + 1)
         else:
             ready_to_eat_food = []
             overdue_food = []
             for food in response:
-                if food["product"]["name"] in data and float(food["amount"]) > 0:
-                    ready_to_eat_food.append(food["product"]["name"])
+                short_name = userfields[food["product"]["name"]]["shortName"]
+                if userfields[food["product"]["name"]]["readyToEat"] == "1" and float(food["amount"]) > 0:
+                    ready_to_eat_food.append(short_name)
                 food_date = food["best_before_date"].split("-")
                 if (
                     time.localtime().tm_year > int(food_date[0])
@@ -80,7 +80,7 @@ def update_grocy(step=0, data=None, recursion=0):
                         and time.localtime().tm_mday > int(food_date[2])
                     )
                 ):
-                    overdue_food.append(food["product"]["name"])
+                    overdue_food.append(short_name)
 
 
 def draw():
