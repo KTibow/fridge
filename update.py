@@ -12,6 +12,7 @@ while time.monotonic() - start_time < 2.3:
         update_ux.update_wifi_render()
         last_render_update = time.monotonic()
     update_ux.render_wifi()
+update_ux.change_builtin_neopixel_status(is_enabled=False)
 
 # Actually connect
 import wifi
@@ -35,9 +36,11 @@ if tries == 3:
 # Download animation
 start_time = time.monotonic()
 last_render_update = time.monotonic()
-while time.monotonic() - start_time < 2.3:
+update_ux.change_builtin_neopixel_status(is_enabled=True)
+while time.monotonic() - start_time < 5:
     if time.monotonic() - last_render_update > 0.1:
         update_ux.update_download_render()
         last_render_update = time.monotonic()
     update_ux.render_download()
+update_ux.change_builtin_neopixel_status(is_enabled=False)
 update_ux.display_image("updates_complete")
