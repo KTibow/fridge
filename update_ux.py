@@ -66,16 +66,16 @@ def render_wifi():
 def update_download_render():
     global render_download_offset
     render_download_offset += 1
-    render_download_offset %= 2
+    render_download_offset %= 4
 
 def render_download():
     builtin_neopixels.fill((0, 0, 0))
     for i in range(4):
-        if i % 2 == render_download_offset:
+        if i % 4 == render_download_offset:
             builtin_neopixels[i] = (0, 255, 255)
     external_neopixels.fill((128, 0, 255))
     for i in range(8, 30):
-        if i % 2 == render_download_offset:
+        if i % 4 == render_download_offset:
             external_neopixels[i] = (255, 255, 255)
     builtin_neopixels.show()
     external_neopixels.show()
