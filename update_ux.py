@@ -1,4 +1,5 @@
 import board  # Pins and display
+import time # Wait for display
 import displayio  # Display
 import digitalio  # Enable neopixels
 
@@ -21,6 +22,7 @@ def display_image(filename):
         group = displayio.Group()
         group.append(tile_grid)
         epd.show(group)
+        time.sleep(epd.time_to_refresh)
         epd.refresh()
 
 def change_builtin_neopixel_status(is_enabled):
