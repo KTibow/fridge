@@ -2,6 +2,7 @@ import board  # Pins and display
 import time # Wait for display
 import displayio  # Display
 import digitalio  # Enable neopixels
+import neopixel # Use neopixels
 
 epd = board.DISPLAY
 neopixels_enabled = digitalio.DigitalInOut(board.NEOPIXEL_POWER)
