@@ -9,6 +9,11 @@ external_neopixels = neopixel.NeoPixel(board.A1, 30, auto_write=False)
 
 neopixels_enabled.switch_to_output()
 
+builtin_neopixel_left = 1
+builtin_neopixel_right = 2
+external_neopixel_left = 19
+external_neopixel_right = 19
+
 def display_image(filename):
     with open(f"/{filename}.bmp", "rb") as bitmap_file:
         bitmap = displayio.OnDiskBitmap(bitmap_file)
