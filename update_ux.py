@@ -73,9 +73,9 @@ def render_download():
     for i in range(4):
         if i % 4 == render_download_offset:
             builtin_neopixels[i] = (0, 255, 255)
-    external_neopixels.fill((128, 0, 255))
+    external_neopixels.fill((0, 0, 0))
     for i in range(8, 30):
         if i % 4 == render_download_offset:
-            external_neopixels[i] = (255, 255, 255)
+            external_neopixels[i] = (128, 0, 255)
     builtin_neopixels.show()
     external_neopixels.show()
