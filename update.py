@@ -33,6 +33,8 @@ if tries == 3:
     raise e
 
 # Download animation
+start_time = time.monotonic()
+last_render_update = time.monotonic()
 while time.monotonic() - start_time < 2.3:
     if time.monotonic() - last_render_update > 0.1:
         update_ux.update_download_render()
