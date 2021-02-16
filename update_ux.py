@@ -3,7 +3,11 @@ import displayio  # Display
 import digitalio  # Enable neopixels
 
 epd = board.DISPLAY
+neopixels_enabled = digitalio.DigitalInOut(board.NEOPIXEL_POWER)
+builtin_neopixels = neopixel.NeoPixel(board.NEOPIXEL, 4, auto_write=False)
+external_neopixels = neopixel.NeoPixel(board.A1, 30, auto_write=False)
 
+neopixels_enabled.switch_to_output()
 
 def display_image(filename):
     with open(f"/{filename}.bmp", "rb") as bitmap_file:
@@ -14,4 +18,37 @@ def display_image(filename):
         epd.show(group)
         epd.refresh()
 
-def change_builtin_neopixel_status(is_enabled)
+def change_builtin_neopixel_status(is_enabled):
+    neopixels_enabled.value = not is_enabled # LOW == False == enabled
+
+def update_wifi_render():
+    global builtin_neopixel_left
+    global builtin_neopixel_right
+    builtin_neopixel_left -= 1
+    if builtin_neopixel_left < 0:
+        builtin_neopixel_left = 1
+    builtin_neopixel_right += 1
+    if builtin_neopixel_right > 3:
+        builtin_neopixel_right = 2
+    global external_neopixel_left
+    global external_neopixel_right
+    external_neopixel_left -= 1
+    if external_neopixel_left < 12:
+        external_neopixel_left = 19
+    external_neopixel_right += 1
+    if external_neopixel_right > 26:
+        external_neopixel_right = 19
+
+
+def render_wifi():
+    builtin_neopixels.fill((0, 0, 0))
+    builtin_neopixels[builtin_neopixel_left] = (0, 255, 255)
+    builtin_neopixels[builtin_neopixel_right] = (0, 255, 255)
+    external_neopixels.fill((128, 0, 255))
+    for i in range(8, 30):
+        if i >= external_neopixel_left - 4 and i < external_neopixel_left:
+            external_neopixels[i] = (255, 255, 255)
+        if i > external_neopixel_right and i <= external_neopixel_right + 4:
+            external_neopixels[i] = (255, 255, 255)
+    builtin_neopixels.show()
+    external_neopixels.show()
