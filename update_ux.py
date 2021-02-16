@@ -16,6 +16,8 @@ builtin_neopixel_right = 2
 external_neopixel_left = 19
 external_neopixel_right = 19
 
+render_download_offset = 0
+
 def display_image(filename):
     with open(f"/{filename}.bmp", "rb") as bitmap_file:
         bitmap = displayio.OnDiskBitmap(bitmap_file)
@@ -60,3 +62,18 @@ def render_wifi():
             external_neopixels[i] = (255, 255, 255)
     builtin_neopixels.show()
     external_neopixels.show()
+
+def update_download_render():
+    global render_download_offset
+    render_download_offset += 1
+    render_download_offset %= 2
+
+def render_download():
+    builtin_neopixels.fill((0, 0, 0))
+    for i in range(4):
+        if i % 2 == render_download_offset:
+            builtin_neopixels[i] = (0, 255, 255)
+    external_neopixels.fill((128, 0, 255))
+    for i in range(8, 30):
+        if i % 2 == render_download_offset:
+            external_neopixels[i] = (255, 255, 255)
