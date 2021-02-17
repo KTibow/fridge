@@ -24,6 +24,11 @@ while tries < 3:
     try:
         wifi.radio.connect(secrets["ssid"], secrets["password"])
     except Exception as e:
+        start_time = time.monotonic()
+        update_ux.change_builtin_neopixel_status(is_enabled=True)
+        while time.monotonic() - start_time < 5:
+            update_ux.wifi_trying_again(start_time, 5)
+        update_ux.change_builtin_neopixel_status(is_enabled=False)
         tries += 1
         error = e
     else:
