@@ -3,6 +3,7 @@ import time # Wait for display
 import displayio  # Display
 import digitalio  # Enable neopixels
 import neopixel # Use neopixels
+import math # Sine for animations
 
 epd = board.DISPLAY
 neopixels_enabled = digitalio.DigitalInOut(board.NEOPIXEL_POWER)
@@ -60,6 +61,40 @@ def render_wifi():
             external_neopixels[i] = (255, 255, 255)
         if i > external_neopixel_right and i <= external_neopixel_right + 4:
             external_neopixels[i] = (255, 255, 255)
+    builtin_neopixels.show()
+    external_neopixels.show()
+
+def wifi_trying_again(start_time, total_time):
+    for i in range(4):
+        color = (math.sin(time.monotonic() * 2 + i) + 2) / 3
+        builtin_neopixels[i] = (
+            color * 255,
+            color * 32,
+            0,
+        )
+    for i in range(30):
+        color = (math.sin(time.monotonic() * 2 + i) + 2) / 3
+        external_neopixels[i] = (
+            color * 255,
+            color * 32,
+            0,
+        )
+    time_progress = start_time - time.monotonic()
+    if time_progress < total_time / 3:
+        builtin_neopixels.brightness = time_progress / (total_time / 3)
+        external_neopixels.brightness = time_progress / (total_time / 3)
+    elif the_brightness > total_time * 0.95:
+        builtin_neopixels.fill((0, 0, 0))
+        external_neopixels.fill((0, 0, 0))
+        builtin_neopixels.brightness = 1
+        external_neopixels.brightness = 1
+    elif the_brightness > total_time / 3 * 2:
+        decimal_brightness = time_progress / total_time
+        builtin_neopixels.brightness = (((decimal_brightness - 2 / 3) * 3) * -1) + 1
+        external_neopixels.brightness = (((decimal_brightness - 2 / 3) * 3) * -1) + 1
+    else:
+        builtin_neopixels.brightness = 1
+        external_neopixels.brightness = 1
     builtin_neopixels.show()
     external_neopixels.show()
 
