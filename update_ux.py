@@ -79,16 +79,16 @@ def wifi_trying_again(start_time, total_time):
             color * 32,
             0,
         )
-    time_progress = start_time - time.monotonic()
+    time_progress = time.monotonic() - start_time
     if time_progress < total_time / 3:
         builtin_neopixels.brightness = time_progress / (total_time / 3)
         external_neopixels.brightness = time_progress / (total_time / 3)
-    elif the_brightness > total_time * 0.95:
+    elif time_progress > total_time * 0.95:
         builtin_neopixels.fill((0, 0, 0))
         external_neopixels.fill((0, 0, 0))
         builtin_neopixels.brightness = 1
         external_neopixels.brightness = 1
-    elif the_brightness > total_time / 3 * 2:
+    elif time_progress > total_time / 3 * 2:
         decimal_brightness = time_progress / total_time
         builtin_neopixels.brightness = (((decimal_brightness - 2 / 3) * 3) * -1) + 1
         external_neopixels.brightness = (((decimal_brightness - 2 / 3) * 3) * -1) + 1
