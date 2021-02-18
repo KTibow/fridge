@@ -59,12 +59,12 @@ pool = socketpool.SocketPool(wifi.radio)
 requests = adafruit_requests.Session(pool, ssl.create_default_context())
 
 all_files = ["boot.py", "code.py", "update.py", "update_ux.py"]
-content_of_files = []
+content_of_files = {}
 
 for file in all_files:
     content_of_files[file] = requests.get(
-            f"https://raw.githubusercontent.com/KTibow/fridge/main/{file}.py"
-        ).text
+        f"https://raw.githubusercontent.com/KTibow/fridge/main/{file}.py"
+    ).text
 
 # Save animation
 start_time = time.monotonic()
@@ -79,5 +79,6 @@ update_ux.change_builtin_neopixel_status(is_enabled=False)
 
 # Actually save
 import json
+
 print(json.dumps(content_of_files))
 update_ux.display_image("updates_complete")
