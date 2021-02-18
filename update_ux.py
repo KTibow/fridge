@@ -131,14 +131,14 @@ def update_save_render():
     save_builtin_acceleration -= 0.1
     save_builtin_position += save_builtin_acceleration
     if save_builtin_position < 0:
-        save_builtin_acceleration *= -0.5
+        save_builtin_acceleration *= -0.8
         save_builtin_position = 0
 
 
 def render_save():
     builtin_neopixels.fill((0, 0, 0))
     for i in range(4):
-        if i == save_builtin_position:
+        if i == round(save_builtin_position) * -1 + 3:
             builtin_neopixels[i] = (64, 255, 0)
     builtin_neopixels.show()
     external_neopixels.show()
