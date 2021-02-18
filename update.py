@@ -37,7 +37,7 @@ while tries < 3:
 if tries == 3:
     update_ux.display_image("wifi_error")
     time.sleep(5)
-    raise e
+    raise error
 
 # Download animation
 start_time = time.monotonic()
