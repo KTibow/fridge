@@ -1,5 +1,6 @@
 # Show update display and show wifi animation
 import update_ux
+
 update_ux.display_image("updating")
 
 import time
@@ -48,4 +49,25 @@ while time.monotonic() - start_time < 5:
         last_render_update = time.monotonic()
     update_ux.render_download()
 update_ux.change_builtin_neopixel_status(is_enabled=False)
+
+# Actually download
+import socketpool
+import ssl
+import adafruit_requests
+
+pool = socketpool.SocketPool(wifi.radio)
+requests = adafruit_requests.Session(pool, ssl.create_default_context())
+
+all_files = ["boot.py", "code.py", "update.py", "update_ux.py"]
+file_content = []
+
+for file in all_files:
+    file_content.append(
+        requests.get(
+            f"https://raw.githubusercontent.com/KTibow/fridge/main/{file}.py"
+        ).text
+    )
+
+# Save animation
+
 update_ux.display_image("updates_complete")
