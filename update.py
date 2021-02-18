@@ -63,7 +63,7 @@ content_of_files = {}
 
 for file in all_files:
     content_of_files[file] = requests.get(
-        f"https://raw.githubusercontent.com/KTibow/fridge/main/{file}.py"
+        f"https://raw.githubusercontent.com/KTibow/fridge/main/{file}"
     ).text
 
 # Save animation
