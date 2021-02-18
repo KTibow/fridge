@@ -140,3 +140,5 @@ def render_save():
     for i in range(4):
         if i == save_builtin_position:
             builtin_neopixels[i] = (64, 255, 0)
+    builtin_neopixels.show()
+    external_neopixels.show()
