@@ -1,9 +1,9 @@
 import board  # Pins and display
-import time # Wait for display
+import time  # Wait for display
 import displayio  # Display
 import digitalio  # Enable neopixels
-import neopixel # Use neopixels
-import math # Sine for animations
+import neopixel  # Use neopixels
+import math  # Sine for animations
 
 epd = board.DISPLAY
 neopixels_enabled = digitalio.DigitalInOut(board.NEOPIXEL_POWER)
@@ -19,6 +19,10 @@ external_neopixel_right = 19
 
 render_download_offset = 0
 
+save_builtin_acceleration = 0
+save_builtin_position = 3
+
+
 def display_image(filename):
     with open(f"/{filename}.bmp", "rb") as bitmap_file:
         bitmap = displayio.OnDiskBitmap(bitmap_file)
@@ -29,8 +33,10 @@ def display_image(filename):
         time.sleep(epd.time_to_refresh)
         epd.refresh()
 
+
 def change_builtin_neopixel_status(is_enabled):
-    neopixels_enabled.value = not is_enabled # LOW == False == enabled
+    neopixels_enabled.value = not is_enabled  # LOW == False == enabled
+
 
 def update_wifi_render():
     global builtin_neopixel_left
@@ -63,6 +69,7 @@ def render_wifi():
             external_neopixels[i] = (255, 255, 255)
     builtin_neopixels.show()
     external_neopixels.show()
+
 
 def wifi_trying_again(start_time, total_time):
     for i in range(4):
@@ -98,15 +105,17 @@ def wifi_trying_again(start_time, total_time):
     builtin_neopixels.show()
     external_neopixels.show()
 
+
 def update_download_render():
     global render_download_offset
     render_download_offset += 1
     render_download_offset %= 4
 
+
 def render_download():
     builtin_neopixels.fill((0, 0, 0))
     for i in range(4):
-        if i % 4 == render_download_offset:
+        if i == render_download_offset:
             builtin_neopixels[i] = (0, 255, 255)
     external_neopixels.fill((0, 0, 0))
     for i in range(8, 30):
@@ -114,3 +123,20 @@ def render_download():
             external_neopixels[i] = (128, 0, 255)
     builtin_neopixels.show()
     external_neopixels.show()
+
+
+def update_save_render():
+    global save_builtin_acceleration
+    global save_builtin_position
+    save_builtin_acceleration -= 0.1
+    save_builtin_position += save_builtin_acceleration
+    if save_builtin_position < 0:
+        save_builtin_acceleration *= -0.5
+        save_builtin_position = 0
+
+
+def render_save():
+    builtin_neopixels.fill((0, 0, 0))
+    for i in range(4):
+        if i == save_builtin_position:
+            builtin_neopixels[i] = (64, 255, 0)
