@@ -207,9 +207,7 @@ while True:
         update_grocy()
         last_grocy_update = time.monotonic()
     if (
-        not magtag.peripherals.button_a_pressed
         and magtag.peripherals.button_b_pressed
-        and not magtag.peripherals.button_c_pressed
         and magtag.peripherals.button_d_pressed
     ):
         magtag.peripherals.neopixel_disable = False
