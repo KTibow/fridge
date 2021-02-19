@@ -42,10 +42,10 @@ def update_wifi_render():
     global builtin_neopixel_left
     global builtin_neopixel_right
     builtin_neopixel_left -= 1
-    if builtin_neopixel_left < 0:
+    if builtin_neopixel_left < -1:
         builtin_neopixel_left = 1
     builtin_neopixel_right += 1
-    if builtin_neopixel_right > 3:
+    if builtin_neopixel_right > 4:
         builtin_neopixel_right = 2
     global external_neopixel_left
     global external_neopixel_right
@@ -59,8 +59,9 @@ def update_wifi_render():
 
 def render_wifi():
     builtin_neopixels.fill((0, 0, 0))
-    builtin_neopixels[builtin_neopixel_left] = (0, 255, 255)
-    builtin_neopixels[builtin_neopixel_right] = (0, 255, 255)
+    if builtin_neopixel_left > -1:
+        builtin_neopixels[builtin_neopixel_left] = (0, 255, 255)
+        builtin_neopixels[builtin_neopixel_right] = (0, 255, 255)
     external_neopixels.fill((128, 0, 255))
     for i in range(8, 30):
         if i >= external_neopixel_left - 4 and i < external_neopixel_left:
