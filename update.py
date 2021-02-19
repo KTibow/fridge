@@ -62,9 +62,10 @@ all_files = ["boot.py", "code.py", "update.py", "update_ux.py"]
 content_of_files = {}
 
 for file in all_files:
-    content_of_files[file] = requests.get(
-        f"https://raw.githubusercontent.com/KTibow/fridge/main/{file}"
-    ).text
+    while file not in content_of_files:
+        content_of_files[file] = requests.get(
+            f"https://raw.githubusercontent.com/KTibow/fridge/main/{file}"
+        ).text
 
 # Save animation
 start_time = time.monotonic()
