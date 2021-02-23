@@ -6,7 +6,7 @@ try:
             print("Updating...")
             boot.write(new_boot.read())
             boot.flush()
-    os.removes("/latest_boot.py")
-    microcontroller.reboot()
+    os.remove("/latest_boot.py")
+    microcontroller.reset()
 except Exception:
     pass

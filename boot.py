@@ -199,3 +199,8 @@ for filename, content in files.items():
 with open("latest_boot.py", "w") as code:
     code.write(files["boot.py"])
     code.flush()
+
+# Finish
+mt.peripherals.neopixels[3] = (25, 255, 0)
+for i in range(22, 30):
+    external_neopixels[i] = (25, 255, 0)
