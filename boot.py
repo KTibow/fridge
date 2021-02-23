@@ -172,10 +172,12 @@ external_neopixels.show()
 
 # Save files
 import storage
-try:
-    storage.remount("/", False)
-    with open("code.py", "w") as code:
-        code.write(files["code.py"])
-        code.flush()
-finally:
-    storage.remount("/", True)
+storage.remount("/", False)
+for filename, content in files.items():
+    if filename != "boot.py":
+        with open(filename, "w") as code:
+            code.write(content)
+            code.flush()
+with open("latest_boot.py", "w") as code:
+    code.write(files["boot.py"])
+    code.flush()
