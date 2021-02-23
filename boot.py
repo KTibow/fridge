@@ -124,6 +124,15 @@ while tries != 0:
         time.sleep(0.15)
         speaker.duty_cycle = 0
         mt.peripherals._speaker_enable.value = False
+if tries == 0:
+    mt.peripherals._speaker_enable.value = True
+    speaker.duty_cycle = 0x8000
+    speaker.frequency = 500
+    time.sleep(0.25)
+    speaker.frequency = 400
+    time.sleep(0.25)
+    speaker.duty_cycle = 0
+    mt.peripherals._speaker_enable.value = False
 
 # Next bit of progress bar
 mt.peripherals.neopixels[0] = (25, 255, 0)
@@ -157,6 +166,15 @@ for file in ["boot.py", "code.py"]:
             time.sleep(0.15)
             speaker.duty_cycle = 0
             mt.peripherals._speaker_enable.value = False
+    if tries == 0:
+        mt.peripherals._speaker_enable.value = True
+        speaker.duty_cycle = 0x8000
+        speaker.frequency = 500
+        time.sleep(0.25)
+        speaker.frequency = 400
+        time.sleep(0.25)
+        speaker.duty_cycle = 0
+        mt.peripherals._speaker_enable.value = False
 
 # Final bit of progress bar
 mt.peripherals.neopixels[1] = (25, 255, 0)
