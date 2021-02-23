@@ -10,3 +10,5 @@ try:
     microcontroller.reset()
 except Exception:
     pass
+
+from adafruit_magtag.magtag import MagTag

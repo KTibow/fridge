@@ -1,6 +1,6 @@
 <svg height="200" width="900" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10 10 V190 H 90 V 180 H 20 V 10 Z" />
-  <path d="M190 190 V180 H 120 V 100 H 190 V 110 H 120 V 20 H 190 V 10 H 110 V 190 Z" />
+  <path d="M10 10 V 190 H 90 V 180 H 20 V 10 Z" />
+  <path d="M190 190 V 180 H 120 V 100 H 190 V 110 H 120 V 20 H 190 V 10 H 110 V 190 Z" />
   <circle cx="138" cy="110" r="5" fill="#999999" />
   <circle cx="171" cy="110" r="5" fill="#999999" />
   <line x1="110" y1="35" x2="103" y2="35" stroke-width="2" stroke="#999" />
@@ -13,4 +13,19 @@
   <line x1="450" y1="150" x2="450" y2="135" stroke-width="2" stroke="#999" />
   <line x1="450" y1="150" x2="465" y2="165" stroke-width="2" stroke="#999" />
   <path d="M510 190 H 520 V 20 L 580 190 H 590 V 10 H 580 V 155 L 530 10 H 510 Z" />
+  <path d="M610 10 H 670 L 690 70 V 130 L 670 190 H 610 Z" />
+  <path d="M620 20 H 660 L 680 70 V 130 L 660 180 H 620 Z" fill="#FFF" />
+  <line x1="670" y1="100" x2="670" y2="45" stroke-width="3" stroke="#999" />
+  <line x1="670" y1="100" x2="670" y2="155" stroke-width="3" stroke="#999" />
+  <line x1="620" y1="100" x2="700" y2="100" stroke-width="3" stroke="#FFF" />
+  <path d="M790 190 V 180 H 720 V 100 H 790 V 110 H 720 V 20 H 790 V 10 H 710 V 190 Z" />
+  <circle cx="738" cy="110" r="5" fill="#999999" />
+  <circle cx="771" cy="110" r="5" fill="#999999" />
+  <line x1="710" y1="35" x2="703" y2="35" stroke-width="2" stroke="#999" />
+  <line x1="790" y1="105" x2="800" y2="45" stroke-width="2" stroke="#999" />
+  <path d="M810 10 V 190 H 820 V 100 L 880 190 H 890 L 820 85 V 10 Z" />
+  <path d="M810 10 H 850 A 40 40 0 0 1 850 90 H 810 V 80 H 850 A 30 30 0 0 0 850 20 H 810 Z" />
+  <ellipse cx="829" cy="74" rx="8" ry="5" fill="#999" />
+  <ellipse cx="846" cy="74" rx="8" ry="5" fill="#999" />
+  <ellipse cx="866" cy="74" rx="8" ry="5" fill="#999" transform="rotate(-45)" />
 </svg>
