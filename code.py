@@ -11,4 +11,8 @@ try:
 except Exception:
     pass
 
-from adafruit_magtag.magtag import MagTag
+from adafruit_magtag.magtag import MagTag # Main MagTag
+import alarm # Deep sleep
+
+mt = MagTag()
+wakeup_cause = alarm.wake_alarm
