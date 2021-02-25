@@ -47,7 +47,7 @@ def get_latest_version(drive):
         ]
     )
     shutil.copy(
-        r"C:\Users\Kende\Documents\baa\secrets.py",
+        os.path.join(os.path.expanduser("~"), "secrets.py"),
         os.path.join(tempfile.gettempdir(), "MagTagUpdater"),
     )
     if os.path.exists(rf"{drive}:\boot_out.txt"):
@@ -67,7 +67,9 @@ def get_latest_version(drive):
     # done
     subprocess.call(
         [
-            r"C:\Users\Kende\AppData\Local\Programs\Git\bin\bash.exe",
+            os.path.join(
+                os.path.expanduser("~"), r"AppData\Local\Programs\Git\bin\bash.exe"
+            ),
             r"~/git-timestamp.sh",
         ]
     )
@@ -83,9 +85,7 @@ def get_latest_version(drive):
         "leftunder-color.svg",
         "update_magtag.py",
     ]:
-        os.remove(
-            os.path.join(tempfile.gettempdir(), "MagTagUpdater", trashable_file)
-        )
+        os.remove(os.path.join(tempfile.gettempdir(), "MagTagUpdater", trashable_file))
 
 
 def copy_files(drive):
