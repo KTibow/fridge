@@ -1,140 +1,159 @@
-<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-<style>
-  * {
-    font-family: Open Sans, sans-serif;
-    transition: all 0.1s;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: Quicksand, Segoe UI, Helvetica, sans-serif;
-  }
-  .error {
-    text-align: center;
-    margin: 10px 0;
-    padding: 20px;
-    border-radius: 5px;
-    background: coral;
-    color: white;
-  }
-  .message {
-    transition: left 1s;
-    position: fixed;
-    bottom: 8px;
-    left: -100%;
-    background: #333;
-    color: white;
-    padding: 10px;
-    border-radius: 3px;
-  }
-  .data {
-    background: #222;
-    color: white;
-    font-family: monospace;
-    padding: 5px;
-    border-radius: 2px;
-    margin: 10px 0;
-  }
-  .data:focus-visible {
-    outline: gray auto 0.5px;
-  }
-  .data:focus::after {
-    margin-left: 0.1em;
-    width: calc(0.7em / 2);
-    height: 0.7em;
-    content: "";
-    background: white;
-    display: inline-block;
-    animation: blink infinite 1s;
-  }
-  @keyframes blink {
-    0% {
-      background: transparent;
-    }
-    49.9% {
-      background: transparent;
-    }
-    50% {
-      background: white;
-    }
-    99.9% {
-      background: white;
-    }
-  }
-  button {
-    background: cornflowerblue;
-    color: white;
-    border-radius: 2px;
-    padding: 10px;
-    border: none;
-  }
-</style>
-<h1>Serial Console</h1>
-<div class="error" style="display: none;">
-  <p>Enable experimental web platform features in chrome://flags.</p>
-</div>
-<div class="message"></div>
-<button onclick="connectToSerial()" id="connectionControl">Connect</button>
-<div class="data" style="padding: 0; height: 0;" tabindex="2">
-</div>
-<noscript>
-  <style>
-    .error {
-       display: block;
-    }
-  </style>
-</noscript>
-<script>
-if (!"serial" in navigator) {
-  document.querySelector(".error").style.display = "block";
-}
-var decoder = new TextDecoder();
-function processText(response) {
-  var value = response.value;
-  var done = response.done;
-  if (done) {
-    console.log("Stream complete!", decoder.decode(value));
-    return;
-  }
-  console.log(decoder.decode(value));
-  document.querySelector(".data").innerHTML += decoder.decode(value).trim().replace("\n", "<br>");
-  return reader.read().then(processText);
-}
-async function connectToSerial() {
-  if ("port" in window) {
-    await window.reader.cancel();
-    await window.reader.releaseLock();
-    await window.writer.releaseLock();
-    await window.port.close();
-    delete window.reader;
-    delete window.writer;
-    delete window.port;
-    document.getElementById("connectionControl").innerHTML = "Connect";
-    document.getElementById("connectionControl").style.background = "";
-    document.querySelector(".data").style.padding = "0";
-    document.querySelector(".data").style.height = "0";
-    return;
-  }
-  try {
-    window.port = await navigator.serial.requestPort();
-  } catch (err) {
-    window.onerror(err);
-  }
-  await port.open({ baudRate: 9600 });
-  window.reader = port.readable.getReader();
-  window.writer = port.writable.getWriter();
-  document.getElementById("connectionControl").innerHTML = "Disconnect";
-  document.getElementById("connectionControl").style.background = "coral";
-  document.querySelector(".data").style.padding = "";
-  document.querySelector(".data").style.height = "";
-  window.reader.read().then(processText);
-}
-window.onerror = (msg, url, lineNo, columnNo, error) => {
-  document.querySelector(".message").style.left = "8px";
-  document.querySelector(".message").innerHTML = "Error " + String(msg);
-  setTimeout(() => {document.querySelector(".message").style.left = "";}, 5000);
-  if (!error) error = msg;
-  throw error;
-}
-document.querySelector(".data").onkeydown = (key) => {
-  if (!window.writer) return;
-}
-</script>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+        <style>
+            * {
+                font-family: Open Sans, sans-serif;
+                transition: all 0.1s;
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: Quicksand, Segoe UI, Helvetica, sans-serif;
+            }
+            .error {
+                text-align: center;
+                margin: 10px 0;
+                padding: 20px;
+                border-radius: 5px;
+                background: coral;
+                color: white;
+            }
+            .message {
+                transition: left 1s;
+                position: fixed;
+                bottom: 8px;
+                left: -100%;
+                background: #333;
+                color: white;
+                padding: 10px;
+                border-radius: 3px;
+            }
+            .data {
+                background: #222;
+                color: white;
+                font-family: monospace;
+                padding: 5px;
+                border-radius: 2px;
+                margin: 10px 0;
+            }
+            .data:focus-visible {
+                outline: gray auto 0.5px;
+            }
+            .data:focus::after {
+                margin-left: 0.1em;
+                width: calc(0.7em / 2);
+                height: 0.7em;
+                content: "";
+                background: white;
+                display: inline-block;
+                animation: blink infinite 1s;
+            }
+            @keyframes blink {
+                0% {
+                    background: transparent;
+                }
+                49.9% {
+                    background: transparent;
+                }
+                50% {
+                    background: white;
+                }
+                99.9% {
+                    background: white;
+                }
+            }
+            button {
+                background: cornflowerblue;
+                color: white;
+                border-radius: 2px;
+                padding: 10px;
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Serial Console</h1>
+        <div class="error" style="display: none;">
+            <p>Enable experimental web platform features in chrome://flags.</p>
+            <p>
+              In Firefox, this feature is not available.
+              See <a href="https://mozilla.github.io/standards-positions/#webserial" style="color: #000;">why here</a>.
+            </p>
+        </div>
+        <div class="message"></div>
+        <button onclick="connectToSerial()" id="connectionControl">Connect</button>
+        <div class="data" style="padding: 0; height: 0;" tabindex="2"></div>
+        <noscript>
+            <style>
+                .error {
+                    display: block;
+                }
+            </style>
+        </noscript>
+        <script>
+            if (!("serial" in navigator)) {
+                document.querySelector(".error").style.display = "block";
+            }
+            var decoder = new TextDecoder();
+            function processText(response) {
+                var value = response.value;
+                var done = response.done;
+                if (done) {
+                    console.log("Stream complete!", decoder.decode(value));
+                    return;
+                }
+                console.log(decoder.decode(value));
+                document.querySelector(".data").innerHTML += decoder.decode(value).trim().replace("\n", "<br>");
+                return reader.read().then(processText);
+            }
+            async function connectToSerial() {
+                if ("port" in window) {
+                    await window.reader.cancel();
+                    await window.reader.releaseLock();
+                    await window.writer.releaseLock();
+                    await window.port.close();
+                    delete window.reader;
+                    delete window.writer;
+                    delete window.port;
+                    document.getElementById("connectionControl").innerHTML = "Connect";
+                    document.getElementById("connectionControl").style.background = "";
+                    document.querySelector(".data").style.padding = "0";
+                    document.querySelector(".data").style.height = "0";
+                    return;
+                }
+                try {
+                    window.port = await navigator.serial.requestPort();
+                } catch (err) {
+                    window.onerror(err);
+                }
+                await port.open({ baudRate: 9600 });
+                window.reader = port.readable.getReader();
+                window.writer = port.writable.getWriter();
+                document.getElementById("connectionControl").innerHTML = "Disconnect";
+                document.getElementById("connectionControl").style.background = "coral";
+                document.querySelector(".data").style.padding = "";
+                document.querySelector(".data").style.height = "";
+                window.reader.read().then(processText);
+            }
+            window.onerror = (msg, url, lineNo, columnNo, error) => {
+                document.querySelector(".message").style.left = "8px";
+                document.querySelector(".message").innerHTML = "Error " + String(msg);
+                setTimeout(() => {
+                    document.querySelector(".message").style.left = "";
+                }, 5000);
+                if (!error) error = msg;
+                throw error;
+            };
+            document.querySelector(".data").onkeydown = (key) => {
+                if (!window.writer) return;
+                if (["Shift", "Control"].includes(key.key)) return;
+                console.log(key);
+            };
+        </script>
+    </body>
+</html>
