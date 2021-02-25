@@ -100,6 +100,8 @@
                 document.querySelector(".error").style.display = "block";
             }
             var decoder = new TextDecoder();
+            var encoder = new TextEncoder();
+            window.text = "";
             function processText(response) {
                 var value = response.value;
                 var done = response.done;
@@ -108,7 +110,8 @@
                     return;
                 }
                 console.log(decoder.decode(value));
-                document.querySelector(".data").innerHTML += decoder.decode(value).trim().replace("\n", "<br>");
+                window.text += decoder.decode(value);
+                document.querySelector(".data").innerHTML = window.text.trim().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
                 return reader.read().then(processText);
             }
             async function connectToSerial() {
@@ -151,9 +154,35 @@
             };
             document.querySelector(".data").onkeydown = (key) => {
                 if (!window.writer) return;
-                if (["Shift", "Control"].includes(key.key)) return;
                 console.log(key);
+                if (key.ctrlKey && key.key == "c" && window.getSelection().toString().length > 0) {
+                  console.log("Deferring ctrl+c to default behavior");
+                  return;
+                } else if (key.ctrlKey && key.key == "c") {
+                  console.log("Sending ctrl+c");
+                  window.writer.write(encoder.encode("\x03"));
+                  return false;
+                } else if (key.ctrlKey && key.key == "d") {
+                  console.log("Sending ctrl+d");
+                  window.writer.write(encoder.encode("\x04"));
+                  return false;
+                } else if (key.ctrlKey && key.key == "a") {
+                  console.log("Deferring ctrl+a to default behavior");
+                  return;
+                } else if (key.ctrlKey && key.key == "v") {
+                  console.log("Deferring ctrl+v to custom onpaste");
+                  return;
+                } else if (key.key == "Enter") {
+                  console.log("Sending enter");
+                  window.writer.write(encoder.encode("\r\n"));
+                  return false;
+                }
+                if (key.key.length != 1) return;
+                console.log("Sending", key.key);
+                window.writer.write(encoder.encode(key.key));
+                return false;
             };
+            document.querySelector(".data").onpaste = console.log;
         </script>
     </body>
 </html>
