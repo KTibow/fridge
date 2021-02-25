@@ -1,0 +1,22 @@
+{
+  "name": "Leftunder Project",
+  "version": "1.0.0",
+  "slug": "leftunder_project",
+  "description": "Helper server for the Leftunder Project connecting to Grocy.",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "url": "https://github.com/KTibow/fridge",
+  "startup": "application",
+  "boot": "auto",
+  "stage": "experimental",
+  "options": {
+    "grocy_endpoint": "http://CHANGE THIS TO YOUR USERNAME:CHANGE TO YOUR PORT/",
+    "grocy_api_key": "GET A GROCY API KEY AND PUT HERE"
+  },
+  "schema": {
+    "grocy_endpoint": "str",
+    "grocy_api_key": "str"
+  },
+  "ports": {
+    "5338/tcp": 5338
+  }
+}

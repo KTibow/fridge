@@ -1,10 +1,10 @@
-<svg height="200" width="900" xmlns="http://www.w3.org/2000/svg">
+<svg width="900" height="200" xmlns="http://www.w3.org/2000/svg">
   <path d="M10 10 V 190 H 90 V 180 H 20 V 10 Z" />
   <path d="M190 190 V 180 H 120 V 100 H 190 V 110 H 120 V 20 H 190 V 10 H 110 V 190 Z" />
   <circle cx="138" cy="110" r="5" fill="#666" />
   <circle cx="171" cy="110" r="5" fill="#666" />
-  <line x1="110" y1="35" x2="103" y2="35" stroke-width="2" stroke="#999" />
-  <line x1="190" y1="105" x2="200" y2="45" stroke-width="2" stroke="#999" />
+  <line x1="110" y1="35" x2="103" y2="35" stroke-width="2" stroke="orange" />
+  <line x1="190" y1="105" x2="200" y2="45" stroke-width="2" stroke="black" />
   <path d="M220 190 H 210 V 10 H 290 V 20 H 220 V 95 H 290 V 105 H 220 Z" />
   <path d="M345 190 H 355 V 20 H 390 V 10 H 310 V 20 H 345 Z" />
   <path d="M345 190 H 355 V 20 H 390 V 10 H 310 V 20 H 345 Z" />
@@ -21,18 +21,18 @@
   <path d="M790 190 V 180 H 720 V 100 H 790 V 110 H 720 V 20 H 790 V 10 H 710 V 190 Z" />
   <circle cx="738" cy="110" r="5" fill="#999999" />
   <circle cx="771" cy="110" r="5" fill="#999999" />
-  <line x1="710" y1="35" x2="703" y2="35" stroke-width="2" stroke="#999" />
-  <line x1="790" y1="105" x2="800" y2="45" stroke-width="2" stroke="#999" />
+  <line x1="710" y1="35" x2="703" y2="35" stroke-width="2" stroke="orange" />
+  <line x1="790" y1="105" x2="800" y2="45" stroke-width="2" stroke="black" />
   <path d="M810 10 V 190 H 820 V 100 L 880 190 H 890 L 820 85 V 10 Z" />
   <path d="M810 10 H 850 A 40 40 0 0 1 850 90 H 810 V 80 H 850 A 30 30 0 0 0 850 20 H 810 Z" />
-  <ellipse cx="829" cy="74" rx="8" ry="5" fill="#999" />
-  <ellipse cx="846" cy="74" rx="8" ry="5" fill="#999" />
-  <ellipse cx="862" cy="70" rx="8" ry="5" fill="#999" transform="rotate(-45)" transform-origin="862px 70px"/>
-  <ellipse cx="829" cy="62" rx="8" ry="5" fill="#999" transform="rotate(20)" transform-origin="829px 62px"/>
-  <ellipse cx="846" cy="63" rx="8" ry="5" fill="#999" transform="rotate(-10)" transform-origin="846px 63px" />
-  <ellipse cx="870" cy="54" rx="8" ry="5" fill="#999" transform="rotate(-60)" transform-origin="870px 54px" />
-  <ellipse cx="855" cy="53" rx="8" ry="5" fill="#999" transform="rotate(50)" transform-origin="855px 53px"/>
-  <line x1="807" y1="8.5" x2="855" y2="8.5" stroke-width="3" stroke="#999" />
+  <ellipse cx="829" cy="74" rx="8" ry="5" fill="#400" />
+  <ellipse cx="846" cy="74" rx="8" ry="5" fill="#400" />
+  <ellipse cx="862" cy="70" rx="8" ry="5" fill="#400" transform="rotate(-45)" transform-origin="862px 70px"/>
+  <ellipse cx="829" cy="62" rx="8" ry="5" fill="#400" transform="rotate(20)" transform-origin="829px 62px"/>
+  <ellipse cx="846" cy="63" rx="8" ry="5" fill="#400" transform="rotate(-10)" transform-origin="846px 63px" />
+  <ellipse cx="870" cy="54" rx="8" ry="5" fill="#400" transform="rotate(-60)" transform-origin="870px 54px" />
+  <ellipse cx="855" cy="53" rx="8" ry="5" fill="#400" transform="rotate(50)" transform-origin="855px 53px"/>
+  <line x1="807" y1="8.5" x2="855" y2="8.5" stroke-width="3" stroke="#3aa" />
   <line x1="809" y1="8.5" x2="809" y2="19" stroke-width="3" stroke="#666" />
   <line x1="855" y1="8.5" x2="865" y2="12" stroke-width="3" stroke="#666" />
 </svg>
