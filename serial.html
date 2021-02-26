@@ -104,11 +104,10 @@
                 var value = response.value;
                 var done = response.done;
                 if (done) {
-                    console.log("Stream complete!", decoder.decode(value));
+                    console.log("Disconnected.", decoder.decode(value));
                     return;
                 }
                 console.log(decoder.decode(value));
-                //window.text = window.text.replaceAll(/.\[K/g, "");
                 term.write(decoder.decode(value));
                 return reader.read().then(processText);
             }
@@ -140,6 +139,7 @@
                 document.querySelector(".data").style.visibility = "visible";
                 window.reader.read().then(processText);
                 window.writer.write(encoder.encode("\x03"));
+                term.focus();
             }
             window.onerror = (msg, url, lineNo, columnNo, error) => {
                 document.querySelector(".message").style.left = "8px";
@@ -150,10 +150,21 @@
                 if (!error) error = msg;
                 throw error;
             };
-            /* TODO: Add paste capability, allow copying while text selected */
             term.onKey((key) => {
-                console.log("Sending", key.key);
+                console.log("Sending", key);
                 window.writer.write(encoder.encode(key.key));
+            });
+            term.attachCustomKeyEventHandler((event) => {
+                if (event.ctrlKey && event.key == "v") {
+                    console.log("Skipping for paste");
+                    return false;
+                } else if (event.ctrlKey && event.key == "c" && term.getSelection().length > 0) {
+                    console.log("Skipping for copy");
+                    return false;
+                }
+            });
+            term.on("paste", (content) => {
+                window.writer.write(encoder.encode(content));
             });
             if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
               term.setOption("theme", {
