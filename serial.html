@@ -57,8 +57,19 @@
                     color: #EEE;
                 }
             }
+            ::-webkit-scrollbar {
+                width: 1em;
+            }
             ::-webkit-scrollbar-track {
-                background: #555;
+                background: linear-gradient(#555, #333);
+                border-radius: 3px;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: linear-gradient(hsl(6deg 100% 66%), hsl(16deg 100% 66%));
+                border-radius: 3px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(hsl(6deg 100% 59%), hsl(16deg 100% 66%));
             }
         </style>
     </head>
