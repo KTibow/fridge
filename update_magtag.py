@@ -84,6 +84,7 @@ def get_latest_version(drive):
         "leftunder.svg",
         "leftunder-color.svg",
         "update_magtag.py",
+        "serial.html",
     ]:
         os.remove(os.path.join(tempfile.gettempdir(), "MagTagUpdater", trashable_file))
 
