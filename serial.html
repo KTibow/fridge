@@ -2,6 +2,8 @@
     <head>
         <meta charset="UTF-8" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.js"></script>
         <style>
             * {
                 font-family: Open Sans, sans-serif;
@@ -20,7 +22,7 @@
                 margin: 10px 0;
                 padding: 20px;
                 border-radius: 5px;
-                background: coral;
+                background-color: coral;
                 color: white;
             }
             .message {
@@ -28,51 +30,31 @@
                 position: fixed;
                 bottom: 8px;
                 left: -100%;
-                background: #333;
+                background-color: #333;
                 color: white;
                 padding: 10px;
                 border-radius: 3px;
             }
             .data {
-                background: #222;
-                color: white;
-                font-family: monospace;
                 padding: 5px;
-                border-radius: 2px;
+                border-radius: 4px;
                 margin: 10px 0;
-            }
-            .data:focus-visible {
-                outline: gray auto 0.5px;
-            }
-            .data:focus::after {
-                margin-left: 0.1em;
-                width: calc(0.7em / 2);
-                height: 0.7em;
-                content: "";
-                background: white;
-                display: inline-block;
-                animation: blink infinite 1s;
-            }
-            @keyframes blink {
-                0% {
-                    background: transparent;
-                }
-                49.9% {
-                    background: transparent;
-                }
-                50% {
-                    background: white;
-                }
-                99.9% {
-                    background: white;
-                }
+                visibility: hidden;
             }
             button {
-                background: cornflowerblue;
+                background-color: cornflowerblue;
                 color: white;
                 border-radius: 2px;
                 padding: 10px;
                 border: none;
+            }
+            @media (prefers-color-scheme: dark) {
+                body {
+                    background-color: #333;
+                }
+                h1 {
+                    color: #EEE;
+                }
             }
         </style>
     </head>
@@ -87,21 +69,15 @@
         </div>
         <div class="message"></div>
         <button onclick="connectToSerial()" id="connectionControl">Connect</button>
-        <div class="data" style="padding: 0; height: 0;" tabindex="2"></div>
-        <noscript>
-            <style>
-                .error {
-                    display: block;
-                }
-            </style>
-        </noscript>
+        <div class="data" tabindex="2"></div>
         <script>
             if (!("serial" in navigator)) {
                 document.querySelector(".error").style.display = "block";
             }
             var decoder = new TextDecoder();
             var encoder = new TextEncoder();
-            window.text = "";
+            var term = new Terminal();
+            term.open(document.querySelector(".data"));
             function processText(response) {
                 var value = response.value;
                 var done = response.done;
@@ -110,8 +86,8 @@
                     return;
                 }
                 console.log(decoder.decode(value));
-                window.text += decoder.decode(value);
-                document.querySelector(".data").innerHTML = window.text.trim().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
+                //window.text = window.text.replaceAll(/.\[K/g, "");
+                term.write(decoder.decode(value));
                 return reader.read().then(processText);
             }
             async function connectToSerial() {
@@ -124,9 +100,8 @@
                     delete window.writer;
                     delete window.port;
                     document.getElementById("connectionControl").innerHTML = "Connect";
-                    document.getElementById("connectionControl").style.background = "";
-                    document.querySelector(".data").style.padding = "0";
-                    document.querySelector(".data").style.height = "0";
+                    document.getElementById("connectionControl").style.backgroundColor = "";
+                    document.querySelector(".data").style.visibility = "hidden";
                     return;
                 }
                 try {
@@ -138,10 +113,10 @@
                 window.reader = port.readable.getReader();
                 window.writer = port.writable.getWriter();
                 document.getElementById("connectionControl").innerHTML = "Disconnect";
-                document.getElementById("connectionControl").style.background = "coral";
-                document.querySelector(".data").style.padding = "";
-                document.querySelector(".data").style.height = "";
+                document.getElementById("connectionControl").style.backgroundColor = "coral";
+                document.querySelector(".data").style.visibility = "visible";
                 window.reader.read().then(processText);
+                window.writer.write(encoder.encode("\x03"));
             }
             window.onerror = (msg, url, lineNo, columnNo, error) => {
                 document.querySelector(".message").style.left = "8px";
@@ -152,37 +127,22 @@
                 if (!error) error = msg;
                 throw error;
             };
-            document.querySelector(".data").onkeydown = (key) => {
-                if (!window.writer) return;
-                console.log(key);
-                if (key.ctrlKey && key.key == "c" && window.getSelection().toString().length > 0) {
-                  console.log("Deferring ctrl+c to default behavior");
-                  return;
-                } else if (key.ctrlKey && key.key == "c") {
-                  console.log("Sending ctrl+c");
-                  window.writer.write(encoder.encode("\x03"));
-                  return false;
-                } else if (key.ctrlKey && key.key == "d") {
-                  console.log("Sending ctrl+d");
-                  window.writer.write(encoder.encode("\x04"));
-                  return false;
-                } else if (key.ctrlKey && key.key == "a") {
-                  console.log("Deferring ctrl+a to default behavior");
-                  return;
-                } else if (key.ctrlKey && key.key == "v") {
-                  console.log("Deferring ctrl+v to custom onpaste");
-                  return;
-                } else if (key.key == "Enter") {
-                  console.log("Sending enter");
-                  window.writer.write(encoder.encode("\r\n"));
-                  return false;
-                }
-                if (key.key.length != 1) return;
+            /* TODO: Add paste capability, allow copying while text selected */
+            term.onKey((key) => {
                 console.log("Sending", key.key);
                 window.writer.write(encoder.encode(key.key));
-                return false;
-            };
-            document.querySelector(".data").onpaste = console.log;
+            });
+            if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+              term.setOption("theme", {
+                  background: "#111"
+              });
+              document.querySelector(".data").style.backgroundColor = "#111";
+            } else {
+              term.setOption("theme", {
+                  background: "#222"
+              });
+              document.querySelector(".data").style.backgroundColor = "#222";
+            }
         </script>
     </body>
 </html>
