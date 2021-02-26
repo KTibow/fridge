@@ -68,8 +68,14 @@
                 background: linear-gradient(hsl(6deg 100% 66%), hsl(16deg 100% 66%));
                 border-radius: 3px;
             }
+            ::-webkit-scrollbar-thumb:horizontal {
+                background: linear-gradient(90deg, hsl(6deg 100% 66%), hsl(16deg 100% 66%));
+            }
             ::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(hsl(6deg 100% 59%), hsl(16deg 100% 66%));
+            }
+            ::-webkit-scrollbar-thumb:horizontal:hover {
+                background: linear-gradient(90deg, hsl(6deg 100% 59%), hsl(16deg 100% 66%));
             }
         </style>
     </head>
@@ -118,6 +124,7 @@
                     document.getElementById("connectionControl").innerHTML = "Connect";
                     document.getElementById("connectionControl").style.backgroundColor = "";
                     document.querySelector(".data").style.visibility = "hidden";
+                    term.clear();
                     return;
                 }
                 try {
