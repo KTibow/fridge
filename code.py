@@ -59,5 +59,32 @@ if wakeup_cause is None:
     mt.set_text("Data")
 
 data = mt.network.fetch("http://192.168.1.3:5338/").json()
+mt.add_text(
+    text_font="segoe-ui-12.pcf",
+    text_anchor_point=(0, 0),
+    text_position=(5, 5),
+    line_spacing=0.75,
+)
 
-# mt.exit_and_deep_sleep(1)
+the_output = ""
+if len(data["missing"]) > 0:
+    the_output += "Buy more of:\n"
+    for item in data["missing"]:
+        the_output += f"  - {item}\n"
+if len(data["overdue"]) > 0:
+    the_output += "Overdue:\n"
+    for item in data["overdue"]:
+        the_output += f"  - {item}\n"
+if len(data["ready_to_eat"]) > 0:
+    the_output += "Ready to eat:\n"
+    for item in data["ready_to_eat"]:
+        the_output += f"  - {item}\n"
+
+if wakeup_cause is None:
+    mt.set_text("", auto_refresh=False)
+    mt.graphics.set_background(0xFFFFFF)
+    mt.set_text(the_output, 1)
+else:
+    mt.set_text(the_output)
+
+mt.exit_and_deep_sleep(60 * 60)
