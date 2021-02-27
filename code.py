@@ -68,6 +68,10 @@ mt.add_text(
 )
 the_output = ""
 
+if len(data["ready_to_eat"]) > 0:
+    the_output += "\nReady to eat:\n\n"
+    for item in data["ready_to_eat"]:
+        the_output += f"  - {item}\n"
 if len(data["missing"]) > 0:
     the_output += "\nBuy more of:\n\n"
     for item in data["missing"]:
@@ -75,10 +79,6 @@ if len(data["missing"]) > 0:
 if len(data["overdue"]) > 0:
     the_output += "\nOverdue:\n\n"
     for item in data["overdue"]:
-        the_output += f"  - {item}\n"
-if len(data["ready_to_eat"]) > 0:
-    the_output += "\nReady to eat:\n\n"
-    for item in data["ready_to_eat"]:
         the_output += f"  - {item}\n"
 
 the_output = the_output.strip()
