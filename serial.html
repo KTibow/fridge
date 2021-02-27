@@ -116,7 +116,9 @@
             }
             async function connectToSerial() {
                 if ("port" in window) {
-                    await window.reader.cancel();
+                    try {
+                        await window.reader.cancel();
+                    } catch (err) {}
                     await window.reader.releaseLock();
                     await window.writer.releaseLock();
                     await window.port.close();

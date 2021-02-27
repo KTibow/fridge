@@ -24,11 +24,11 @@ if wakeup_cause is None:
         text_anchor_point=(0.5, 0),
         text_position=(64, 148),
     )
-    mt.set_text("< WiFi >")
+    mt.set_text("WiFi")
 
 mt.network.connect()
 
 if wakeup_cause is None:
-    mt.set_text("< Data >")
+    mt.set_text("Data")
 
 # mt.exit_and_deep_sleep(1)
