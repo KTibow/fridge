@@ -2,9 +2,9 @@
 ---
 
 $header-bg-color: hsl(4deg, 100%, 45%);
-$header-bg-color-secondary: hsl(18deg, 100%, 45%);
-$section-headings-color: hsl(18deg, 100%, 45%);
-$body-link-color: hsl(4deg, 100%, 45%);
+$header-bg-color-secondary: hsl(25deg, 100%, 45%);
+$section-headings-color: hsl(16deg, 100%, 55%);
+$body-link-color: hsl(4deg, 100%, 55%);
 
 @import "{{ site.theme }}";
 
