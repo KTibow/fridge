@@ -32,7 +32,7 @@ def send_data():
     volatile = requests.get(grocy_api_endpoint + "stock/volatile", headers=grocy_headers).json()
 
     response["overdue"] = []
-    for due_product in volatile["due_products"] + volatile["expired_products"]:
+    for due_product in volatile["overdue_products"] + volatile["expired_products"]:
         response["overdue"].append(name_lookup(products, due_product["product"]["id"]))
 
     response["missing"] = []
