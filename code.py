@@ -63,20 +63,20 @@ mt.add_text(
     text_font="segoe-ui-12.pcf",
     text_anchor_point=(0, 0),
     text_position=(5, 5),
-    line_spacing=0.75,
+    line_spacing=0.88,
 )
 
 the_output = ""
 if len(data["missing"]) > 0:
-    the_output += "Buy more of:\n"
+    the_output += "\nBuy more of:\n\n"
     for item in data["missing"]:
         the_output += f"  - {item}\n"
 if len(data["overdue"]) > 0:
-    the_output += "Overdue:\n"
+    the_output += "\nOverdue:\n\n"
     for item in data["overdue"]:
         the_output += f"  - {item}\n"
 if len(data["ready_to_eat"]) > 0:
-    the_output += "Ready to eat:\n"
+    the_output += "\nReady to eat:\n\n"
     for item in data["ready_to_eat"]:
         the_output += f"  - {item}\n"
 
@@ -87,4 +87,4 @@ if wakeup_cause is None:
 else:
     mt.set_text(the_output)
 
-mt.exit_and_deep_sleep(60 * 60)
+mt.exit_and_deep_sleep(60 * 5)
