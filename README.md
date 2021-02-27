@@ -33,5 +33,8 @@ except Exception:
 - Post your code to GitHub.
 - Change `https://raw.githubusercontent.com/KTibow/fridge/main/{file}` for your username and repo.
 - When you're ready to OTA, hold down any of the MagTag's buttons while pressing reset. You can release it once it beeps.
+
+### For serial console:
+Make sure you're using an up-to-date version of Chrome or Chrome-based browser (chromium, new edge, etc). Then just visit https://ktibow.github.io/fridge/serial! Hit the connect button, and choose your device. And you can use the terminal like you would use a serial console.
 ## Attributions
 Icons found in the bmp files by Icons8.
