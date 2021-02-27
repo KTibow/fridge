@@ -16,7 +16,7 @@ You may need to change some stuff for boards that aren't the Adafruit MagTag.
 - Make sure you have all of the libraries required.
 - Copy over `boot.py`, `ota.bmp`, `black-ops-one-40.pcf`, and `segoe-ui-12.pcf`.
 - Add this bit to the top of `code.py`:
-```python3
+```python
 try:
     import os, microcontroller
     os.stat("/latest_boot.py")
