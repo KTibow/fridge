@@ -204,3 +204,5 @@ with open("latest_boot.py", "w") as code:
 mt.peripherals.neopixels[3] = (25, 255, 0)
 for i in range(22, 30):
     external_neopixels[i] = (25, 255, 0)
+mt.peripherals.neopixels.show()
+external_neopixels.show()
