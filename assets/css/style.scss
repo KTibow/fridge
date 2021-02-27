@@ -1,0 +1,7 @@
+---
+---
+
+$header-bg-color: hsl(6deg 100% 66%) !default;
+$header-bg-color-secondary: hsl(16deg 100% 66%) !default;
+
+@import "{{ site.theme }}";
