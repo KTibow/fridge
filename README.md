@@ -6,6 +6,7 @@ The Leftunder Project is basically just some code for the Adafruit MagTag. Excep
 - OTA
 - An online serial console
 - Logo + deep sleep
+
 ### What's the Adafruit MagTag?
 It's a thing to go on your fridge with 4 buttons, 4 NeoPixels, a e-ink display, a battery port, and some addon-ports.
 ## How can I use the accessories?
