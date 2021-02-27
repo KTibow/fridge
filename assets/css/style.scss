@@ -1,9 +1,13 @@
 ---
 ---
 
-$header-bg-color: hsl(4deg, 100%, 66%);
-$header-bg-color-secondary: hsl(18deg, 100%, 66%);
-$section-headings-color: hsl(18deg, 100%, 66%);
-$body-link-color: hsl(4deg, 100%, 66%);
+$header-bg-color: hsl(4deg, 100%, 60%);
+$header-bg-color-secondary: hsl(18deg, 100%, 60%);
+$section-headings-color: hsl(18deg, 100%, 60%);
+$body-link-color: hsl(4deg, 100%, 60%);
 
 @import "{{ site.theme }}";
+
+.btn {
+  color: rgba(255, 255, 255, 0.85);
+}
