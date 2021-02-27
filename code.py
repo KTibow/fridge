@@ -1,5 +1,6 @@
 try:
     import os, microcontroller
+
     os.stat("/latest_boot.py")
     with open("/boot.py", "w") as boot:
         with open("/latest_boot.py", "r") as new_boot:
@@ -11,10 +12,10 @@ try:
 except Exception:
     pass
 
-from adafruit_magtag.magtag import MagTag # Main MagTag
-import alarm # Deep sleep
-import neopixel, board # External NeoPixel strip
-import time # Wait and get time
+from adafruit_magtag.magtag import MagTag  # Main MagTag
+import alarm  # Deep sleep
+import neopixel, board  # External NeoPixel strip
+import time  # Wait and get time
 
 mt = MagTag(rotation=180)
 wakeup_cause = alarm.wake_alarm
@@ -65,8 +66,8 @@ mt.add_text(
     text_position=(5, 5),
     line_spacing=0.88,
 )
-
 the_output = ""
+
 if len(data["missing"]) > 0:
     the_output += "\nBuy more of:\n\n"
     for item in data["missing"]:
@@ -80,6 +81,7 @@ if len(data["ready_to_eat"]) > 0:
     for item in data["ready_to_eat"]:
         the_output += f"  - {item}\n"
 
+the_output = the_output.strip()
 if wakeup_cause is None:
     mt.set_text("", auto_refresh=False)
     mt.graphics.set_background(0xFFFFFF)
