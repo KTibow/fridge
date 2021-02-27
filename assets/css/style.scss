@@ -1,17 +1,17 @@
 ---
 ---
 
-$header-bg-color: hsl(4deg, 100%, 60%);
-$header-bg-color-secondary: hsl(18deg, 100%, 60%);
-$section-headings-color: hsl(18deg, 100%, 60%);
-$body-link-color: hsl(4deg, 100%, 60%);
+$header-bg-color: hsl(4deg, 100%, 55%);
+$header-bg-color-secondary: hsl(18deg, 100%, 55%);
+$section-headings-color: hsl(18deg, 100%, 55%);
+$body-link-color: hsl(4deg, 100%, 55%);
 
 @import "{{ site.theme }}";
 
 .btn {
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .btn:hover {
-  color: rgba(255, 255, 255, 0.97);
+  color: rgb(255, 255, 255);
 }
