@@ -9,5 +9,9 @@ $body-link-color: hsl(4deg, 100%, 60%);
 @import "{{ site.theme }}";
 
 .btn {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.btn:hover {
+  color: rgba(255, 255, 255, 0.97);
 }
