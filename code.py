@@ -31,18 +31,10 @@ if wakeup_cause is None:
     )
     mt.set_text("WiFi")
 
-tries = 5
-error = ""
-while tries > 0:
-    try:
-        mt.network.connect()
-    except Exception as e:
-        error = str(e)
-    else:
-        break
-    tries -= 1
-
-if tries == 0:
+try:
+    mt.network.connect()
+except Exception as e:
+    light_strip.fill((255, 0, 0))
     mt.add_text(
         text_font="segoe-ui-12.pcf",
         text_anchor_point=(0, 0),
@@ -52,9 +44,8 @@ if tries == 0:
         mt.set_text("Error!", 1, auto_refresh=False)
     else:
         mt.set_text("Error!", auto_refresh=False)
-    mt.graphics.qrcode(str.encode(error), qr_size=2, x=60, y=240)
+    mt.graphics.qrcode(str.encode(str(e)), qr_size=2, x=60, y=240)
     mt.display.refresh()
-    mt.peripherals.play_tone(1000, 0.1)
     mt.exit_and_deep_sleep(60)
 
 if wakeup_cause is None:
