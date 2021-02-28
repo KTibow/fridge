@@ -54,7 +54,7 @@ if tries == 0:
         mt.set_text("Error!", auto_refresh=False)
     mt.graphics.qrcode(str.encode(error), qr_size=2, x=60, y=240)
     mt.display.refresh()
-    mt.peripherals.play_tone(1000, 0.5)
+    mt.peripherals.play_tone(1000, 0.1)
     mt.exit_and_deep_sleep(60)
 
 if wakeup_cause is None:
