@@ -36,10 +36,10 @@ You can use serial without downloading anything [here](https://ktibow.github.io/
 I made a SVG logo. View it in the repo.  
 It also deep sleeps for an hour on success, and for a minute when it can't connect to WiFi.
 ### Photos
+
 OTA | Booting up | Use
 --- | --- | ---
 ![OTA](https://user-images.githubusercontent.com/10727862/109406595-308e7b80-792f-11eb-9871-15b1cacafc46.jpg) | ![Booting up](https://user-images.githubusercontent.com/10727862/109406609-4bf98680-792f-11eb-95b1-3ff48b37432e.jpg) | ![In action](https://user-images.githubusercontent.com/10727862/109406615-67fd2800-792f-11eb-825a-6ae33e95fac5.jpg)
-
 
 ## Attributions
 Every icon in the `.bmp` files comes from icons8.
