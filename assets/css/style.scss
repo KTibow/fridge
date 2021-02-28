@@ -84,4 +84,8 @@ $body-link-color: hsl(4deg, 100%, 55%);
   .highlight .o {
     color: #fff;
   }
+  
+  .main-content pre > code {
+    color: hsl(199deg, 56%, 73%);
+  }
 }
