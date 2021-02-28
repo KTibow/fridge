@@ -45,7 +45,12 @@ $body-link-color: hsl(4deg, 100%, 55%);
     filter: invert(1) hue-rotate(180deg);
   }
   
-  .main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
+  .main-content h1,
+  .main-content h2,
+  .main-content h3,
+  .main-content h4,
+  .main-content h5,
+  .main-content h6 {
     color: #ff6a33;
   }
   
@@ -65,5 +70,18 @@ $body-link-color: hsl(4deg, 100%, 55%);
   .main-content code {
     color: hsl(199deg, 36%, 73%);
     background-color: #333;
+  }
+  
+  .highlight .ge,
+  .highlight .kc,
+  .highlight .kd,
+  .highlight .kn,
+  .highlight .kp,
+  .highlight .kr,
+  .highlight .k,
+  .highlight .kv,
+  .highlight .ow,
+  .highlight .o {
+    color: #fff;
   }
 }
