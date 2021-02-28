@@ -32,7 +32,6 @@ $body-link-color: hsl(4deg, 100%, 55%);
   }
   
   .btn {
-    color: rgba(255, 255, 255, 0.7);
     background-color: rgba(0, 0, 0, 0.2);
     border-color: rgba(0, 0, 0, 0.07);
 
@@ -61,5 +60,10 @@ $body-link-color: hsl(4deg, 100%, 55%);
   .main-content pre.highlight {
     background-color: #333;
     border: solid 2px;
+  }
+  
+  .main-content code {
+    color: hsl(199deg, 36%, 73%);
+    background-color: #333;
   }
 }
