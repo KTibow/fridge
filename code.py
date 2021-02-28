@@ -89,4 +89,4 @@ if wakeup_cause is None:
 else:
     mt.set_text(the_output)
 
-mt.exit_and_deep_sleep(60 * 5)
+mt.exit_and_deep_sleep(60 * 60)
