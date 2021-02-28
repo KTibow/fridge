@@ -20,6 +20,7 @@ import time  # Wait and get time
 mt = MagTag(rotation=180)
 wakeup_cause = alarm.wake_alarm
 light_strip = neopixel.NeoPixel(board.A1, 30)
+light_strip.fill((255, 255, 0))
 if wakeup_cause is None:
     print("Initial boot!")
     mt.set_background("booting.bmp")
@@ -59,7 +60,7 @@ if tries == 0:
 if wakeup_cause is None:
     mt.set_text("Data")
 
-data = mt.network.fetch("http://192.168.1.3:5338/").json()
+data = mt.network.fetch(mt.network._secrets["endpoint"]).json()
 mt.add_text(
     text_font="segoe-ui-12.pcf",
     text_anchor_point=(0, 0),
@@ -89,4 +90,5 @@ if wakeup_cause is None:
 else:
     mt.set_text(the_output)
 
+light_strip.fill((0, 0, 0))
 mt.exit_and_deep_sleep(60 * 60)
