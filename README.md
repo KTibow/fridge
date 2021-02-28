@@ -36,9 +36,9 @@ You can use serial without downloading anything [here](https://ktibow.github.io/
 I made a SVG logo. View it in the repo.  
 It also deep sleeps for an hour on success, and for a minute when it can't connect to WiFi.
 ### Photos
-OTA (sorry for low quality): ![20210227_182526](https://user-images.githubusercontent.com/10727862/109405885-7f391700-7929-11eb-8fe9-d216ec0f4845.jpg)
-Booting up: ![20210227_183122](https://user-images.githubusercontent.com/10727862/109405971-33d33880-792a-11eb-89e3-1741bafd81ec.jpg)
-Once it's on: ![20210227_182959](https://user-images.githubusercontent.com/10727862/109405959-18682d80-792a-11eb-915e-a162c7ceb4fe.jpg)
+OTA | Booting up | Use
+--- | --- | ---
+![OTA](https://user-images.githubusercontent.com/10727862/109406595-308e7b80-792f-11eb-9871-15b1cacafc46.jpg) | ![Booting up](https://user-images.githubusercontent.com/10727862/109406609-4bf98680-792f-11eb-95b1-3ff48b37432e.jpg) | ![In action](https://user-images.githubusercontent.com/10727862/109406615-67fd2800-792f-11eb-825a-6ae33e95fac5.jpg)
 
 
 ## Attributions
