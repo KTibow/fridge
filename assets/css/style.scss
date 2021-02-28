@@ -46,7 +46,20 @@ $body-link-color: hsl(4deg, 100%, 55%);
     filter: invert(1) hue-rotate(180deg);
   }
   
+  .main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
+    color: #ff6a33;
+  }
+  
   a {
     color: cornflowerblue;
+  }
+  
+  div.highlight {
+    background-color: transparent;
+  }
+  
+  .main-content pre.highlight {
+    background-color: #333;
+    border: solid 2px;
   }
 }
