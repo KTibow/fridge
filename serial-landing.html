@@ -23,15 +23,22 @@
       h6 {
         font-family: Quicksand, Segoe UI, Helvetica, sans-serif;
       }
+      img {
+        max-width: calc(100vw - 16px);
+      }
       div > div {
-        height: calc(30px + 5em);
         vertical-align: top;
         padding: 10px;
         margin: 10px;
         background: #0002;
         border-radius: 5px;
-        width: calc(100% / 4 - 50px);
-        display: inline-block;
+      }
+      @media (orientation: landscape) {
+        div > div {
+          height: calc(30px + 5em);
+          width: calc(100% / 4 - 50px);
+          display: inline-block;
+        }
       }
       div.center {
         text-align: center;
