@@ -18,10 +18,25 @@ import neopixel, board  # External NeoPixel strip
 import time  # Wait and get time
 
 mt = MagTag(rotation=180)
-wakeup_cause = alarm.wake_alarm
 light_strip = neopixel.NeoPixel(board.A1, 30)
 light_strip.fill((255, 255, 0))
-if wakeup_cause is None:
+
+def display_error(e):
+    light_strip.fill((255, 0, 0))
+    mt.add_text(
+        text_font="segoe-ui-12.pcf",
+        text_anchor_point=(0, 0),
+        text_position=(10, 254),
+    )
+    if alarm.wake_alarm is None:
+        mt.set_text("Error!", 1, auto_refresh=False)
+    else:
+        mt.set_text("Error!", auto_refresh=False)
+    mt.graphics.qrcode(str.encode(str(e)), qr_size=2, x=60, y=240)
+    mt.display.refresh()
+    mt.exit_and_deep_sleep(60)
+
+if alarm.wake_alarm is None:
     print("Initial boot!")
     mt.set_background("booting.bmp")
     mt.add_text(
@@ -39,26 +54,18 @@ while tries < 3:
         if tries < 3:
             tries += 1
             continue
+        display_error(e)
     else:
         break
-    light_strip.fill((255, 0, 0))
-    mt.add_text(
-        text_font="segoe-ui-12.pcf",
-        text_anchor_point=(0, 0),
-        text_position=(10, 254),
-    )
-    if wakeup_cause is None:
-        mt.set_text("Error!", 1, auto_refresh=False)
-    else:
-        mt.set_text("Error!", auto_refresh=False)
-    mt.graphics.qrcode(str.encode(str(e)), qr_size=2, x=60, y=240)
-    mt.display.refresh()
-    mt.exit_and_deep_sleep(60)
 
 if wakeup_cause is None:
     mt.set_text("Data")
 
-data = mt.network.fetch(mt.network._secrets["endpoint"]).json()
+try:
+    data = mt.network.fetch(mt.network._secrets["endpoint"]).json()
+except Exception as e:
+    display_error(e)
+
 mt.add_text(
     text_font="segoe-ui-12.pcf",
     text_anchor_point=(0, 0),
