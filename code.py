@@ -58,7 +58,7 @@ while tries < 3:
     else:
         break
 
-if wakeup_cause is None:
+if alarm.wake_alarm is None:
     mt.set_text("Data")
 
 try:
