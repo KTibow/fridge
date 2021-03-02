@@ -31,9 +31,16 @@ if wakeup_cause is None:
     )
     mt.set_text("WiFi")
 
-try:
-    mt.network.connect()
-except Exception as e:
+tries = 0
+while tries < 3:
+    try:
+        mt.network.connect()
+    except Exception as e:
+        if tries < 3:
+            tries += 1
+            continue
+    else:
+        break
     light_strip.fill((255, 0, 0))
     mt.add_text(
         text_font="segoe-ui-12.pcf",
