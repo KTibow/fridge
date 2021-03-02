@@ -52,9 +52,10 @@ while tries < 3:
         mt.network.connect()
     except Exception as e:
         if tries < 3:
+            print("Error connecting to WiFi. Trying again.")
             tries += 1
-            continue
-        display_error(e)
+        else:
+            display_error(e)
     else:
         break
 
