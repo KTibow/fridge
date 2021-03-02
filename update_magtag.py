@@ -73,7 +73,7 @@ def get_latest_version(drive):
             r"~/git-timestamp.sh",
         ]
     )
-    for trashable_dir in [".git", "leftunder_addon"]:
+    for trashable_dir in [".git", "leftunder_addon", "_layouts", "assets"]:
         shutil.rmtree(
             os.path.join(tempfile.gettempdir(), "MagTagUpdater", trashable_dir),
             onerror=handle_error,
