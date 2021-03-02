@@ -89,7 +89,7 @@ if len(data["overdue"]) > 0:
         the_output += f"  - {item}\n"
 
 the_output = the_output.strip()
-if wakeup_cause is None:
+if alarm.wake_alarm is None:
     mt.set_text("", auto_refresh=False)
     mt.graphics.set_background(0xFFFFFF)
     mt.set_text(the_output, 1)
