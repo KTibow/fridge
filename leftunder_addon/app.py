@@ -37,14 +37,14 @@ def send_data():
 
     response["missing"] = []
     for missing_product in volatile["missing_products"]:
-        response["missing"].append(missing_product["product"]["name"])
+        response["missing"].append(name_lookup(products, missing_product["product"]["id"]))
 
     response["ready_to_eat"] = []
     for stock_item in stock:
         if stock_item["amount"] == 0:
             continue
         if ready_to_eat_lookup(products, stock_item["product"]["id"]):
-            response["ready_to_eat"].append(stock_item["product"]["name"])
+            response["ready_to_eat"].append(name_lookup(products, stock_item["product"]["id"]))
     return response
 
 
