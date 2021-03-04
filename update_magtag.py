@@ -112,6 +112,7 @@ def main():
             print("  Couldn't find drive. Press the reset button on the MagTag.")
             input("  When you're ready, press enter to try again.")
             main()
+            return
     print("  Found drive", drive)
     print("Downloading updates.")
     get_latest_version(drive)
