@@ -33,6 +33,7 @@ def display_error(e):
     else:
         mt.set_text("Error!", auto_refresh=False)
     mt.graphics.qrcode(str.encode(str(e)), qr_size=2, x=60, y=240)
+    time.sleep(mt.display.time_to_refresh)
     mt.display.refresh()
     mt.exit_and_deep_sleep(60)
 
