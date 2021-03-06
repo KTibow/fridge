@@ -133,6 +133,7 @@ if tries == 0:
     time.sleep(0.25)
     speaker.duty_cycle = 0
     mt.peripherals._speaker_enable.value = False
+    exit()
 
 # Next bit of progress bar
 mt.peripherals.neopixels[0] = (25, 255, 0)
