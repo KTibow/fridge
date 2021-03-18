@@ -1,6 +1,6 @@
 {
   "name": "Leftunder Project",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "slug": "leftunder_project",
   "description": "Helper server for the Leftunder Project connecting to Grocy.",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],

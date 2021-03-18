@@ -64,7 +64,7 @@ if alarm.wake_alarm is None:
     mt.set_text("Data")
 
 try:
-    data = mt.network.fetch(mt.network._secrets["endpoint"]).json()
+    data = mt.network.fetch(mt.network._secrets["endpoint"] + f"{mt.peripherals.battery}/").json()
 except Exception as e:
     display_error(e)
 

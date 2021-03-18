@@ -23,8 +23,7 @@ def ready_to_eat_lookup(product_response, product_id):
             return False
 
 
-@app.route("/")
-def send_data():
+def get_data():
     response = {}
 
     products = requests.get(grocy_api_endpoint + "objects/products", headers=grocy_headers).json()
@@ -47,5 +46,14 @@ def send_data():
             response["ready_to_eat"].append(name_lookup(products, stock_item["product"]["id"]))
     return response
 
+
+@app.route("/")
+def plain_data():
+    return get_data()
+
+@app.route("/<battery>/")
+def data_with_battery(battery):
+    print(battery)
+    return get_data()
 
 app.run(port=5338, host="0.0.0.0")
