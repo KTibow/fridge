@@ -22,7 +22,9 @@ light_strip = neopixel.NeoPixel(board.A1, 30)
 light_strip.fill((255, 255, 0))
 
 def display_error(e):
-    light_strip.fill((255, 0, 0))
+    for i in range(30):
+        if i % 5 == 0:
+            light_strip[i] = (255, 0, 0)
     mt.add_text(
         text_font="segoe-ui-12.pcf",
         text_anchor_point=(0, 0),
