@@ -100,4 +100,4 @@ else:
     mt.set_text(the_output)
 
 light_strip.fill((0, 0, 0))
-mt.exit_and_deep_sleep(3 * 60 * 60)
+mt.exit_and_deep_sleep(60 * 60)
