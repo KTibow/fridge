@@ -63,12 +63,17 @@ while tries < 3:
     else:
         break
 
+print("Successfully connected to WiFi!")
+
 if alarm.wake_alarm is None:
     mt.set_text("Data")
 
 try:
-    data = mt.network.fetch(mt.network._secrets["endpoint"] + f"{mt.peripherals.battery}/").json()
+    server_url = mt.network._secrets["endpoint"] + f"{mt.peripherals.battery}/"
+    print("Trying to connect to", server_url, "for data.")
+    data = mt.network.fetch(server_url).json()
 except Exception as e:
+    print("Data error.", e)
     display_error(e)
 
 mt.add_text(
