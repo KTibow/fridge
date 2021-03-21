@@ -80,7 +80,6 @@ mt.add_text(
     text_font="segoe-ui-12.pcf",
     text_anchor_point=(0, 0),
     text_position=(2, 2),
-    text_wrap=20,
     line_spacing=0.88,
 )
 the_output = ""
